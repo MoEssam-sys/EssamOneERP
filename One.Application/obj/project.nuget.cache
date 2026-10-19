@@ -1,0 +1,125 @@
+{
+  "version": 2,
+  "dgSpecHash": "SdbyMBszyeo=",
+  "success": true,
+  "projectFilePath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\dapper\\2.1.79\\dapper.2.1.79.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.10\\microsoft.aspnetcore.authentication.jwtbearer.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.authorization\\10.0.10\\microsoft.aspnetcore.authorization.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.components\\10.0.10\\microsoft.aspnetcore.components.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\10.0.10\\microsoft.aspnetcore.components.analyzers.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\10.0.10\\microsoft.aspnetcore.cryptography.internal.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\10.0.10\\microsoft.aspnetcore.cryptography.keyderivation.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.10\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.metadata\\10.0.10\\microsoft.aspnetcore.metadata.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.bcl.cryptography\\10.0.2\\microsoft.bcl.cryptography.10.0.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.data.sqlclient\\7.0.2\\microsoft.data.sqlclient.7.0.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.data.sqlclient.extensions.abstractions\\7.0.2\\microsoft.data.sqlclient.extensions.abstractions.7.0.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.data.sqlclient.internal.logging\\7.0.2\\microsoft.data.sqlclient.internal.logging.7.0.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\6.0.2\\microsoft.data.sqlclient.sni.runtime.6.0.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.entityframeworkcore\\10.0.10\\microsoft.entityframeworkcore.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\10.0.10\\microsoft.entityframeworkcore.abstractions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\10.0.10\\microsoft.entityframeworkcore.analyzers.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\10.0.10\\microsoft.entityframeworkcore.relational.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\10.0.10\\microsoft.entityframeworkcore.sqlserver.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.10\\microsoft.extensions.caching.abstractions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.caching.memory\\10.0.10\\microsoft.extensions.caching.memory.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.10\\microsoft.extensions.configuration.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.10\\microsoft.extensions.configuration.abstractions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.10\\microsoft.extensions.configuration.binder.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.configuration.environmentvariables\\10.0.10\\microsoft.extensions.configuration.environmentvariables.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\10.0.10\\microsoft.extensions.configuration.fileextensions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.configuration.json\\10.0.10\\microsoft.extensions.configuration.json.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.10\\microsoft.extensions.dependencyinjection.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.10\\microsoft.extensions.dependencyinjection.abstractions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.diagnostics\\10.0.10\\microsoft.extensions.diagnostics.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\10.0.10\\microsoft.extensions.diagnostics.abstractions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.10\\microsoft.extensions.fileproviders.abstractions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\10.0.10\\microsoft.extensions.fileproviders.physical.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\10.0.10\\microsoft.extensions.filesystemglobbing.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.identity.core\\10.0.10\\microsoft.extensions.identity.core.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.identity.stores\\10.0.10\\microsoft.extensions.identity.stores.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.logging\\10.0.10\\microsoft.extensions.logging.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.10\\microsoft.extensions.logging.abstractions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.options\\10.0.10\\microsoft.extensions.options.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.options.configurationextensions\\10.0.10\\microsoft.extensions.options.configurationextensions.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.10\\microsoft.extensions.primitives.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.19.2\\microsoft.identitymodel.abstractions.8.19.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.19.2\\microsoft.identitymodel.jsonwebtokens.8.19.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.identitymodel.logging\\8.19.2\\microsoft.identitymodel.logging.8.19.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.identitymodel.protocols\\8.19.2\\microsoft.identitymodel.protocols.8.19.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\8.19.2\\microsoft.identitymodel.protocols.openidconnect.8.19.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.19.2\\microsoft.identitymodel.tokens.8.19.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\system.configuration.configurationmanager\\10.0.0\\system.configuration.configurationmanager.10.0.0.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\system.diagnostics.eventlog\\10.0.0\\system.diagnostics.eventlog.10.0.0.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.19.2\\system.identitymodel.tokens.jwt.8.19.2.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\system.security.cryptography.pkcs\\10.0.10\\system.security.cryptography.pkcs.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\system.security.cryptography.protecteddata\\10.0.0\\system.security.cryptography.protecteddata.10.0.0.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\system.security.cryptography.xml\\10.0.10\\system.security.cryptography.xml.10.0.10.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\z.dapper.plus\\9.3.3\\z.dapper.plus.9.3.3.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'System.Security.Cryptography.Pkcs' 10.0.10 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-2fmv-rv2c-59x7",
+      "projectPath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "libraryId": "System.Security.Cryptography.Pkcs",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'System.Security.Cryptography.Pkcs' 10.0.10 has a known high severity vulnerability, https://github.com/advisories/GHSA-846f-f764-76mx",
+      "projectPath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "libraryId": "System.Security.Cryptography.Pkcs",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'System.Security.Cryptography.Xml' 10.0.10 has a known high severity vulnerability, https://github.com/advisories/GHSA-7hqp-7c5m-4vq6",
+      "projectPath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'System.Security.Cryptography.Xml' 10.0.10 has a known high severity vulnerability, https://github.com/advisories/GHSA-c399-9853-6jmj",
+      "projectPath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    },
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'System.Security.Cryptography.Xml' 10.0.10 has a known high severity vulnerability, https://github.com/advisories/GHSA-r955-8q5j-3h83",
+      "projectPath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\OldOneERP\\One.Application\\One.Application.csproj",
+      "libraryId": "System.Security.Cryptography.Xml",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}
