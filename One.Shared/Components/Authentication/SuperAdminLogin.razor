@@ -1,0 +1,316 @@
+@page "/superadmin-login"
+@using System.Text.Json
+@using One.Shared.Services
+@using One.Domain.DTOs
+@using One.Domain.DTOs.Identity
+@using One.Shared.Services.Platform
+@inject NavigationManager _nav
+@inject HttpClient _http
+@inject MessagesCenter _msg
+@inject AuthenticationService authenticationService
+@inject JwtAuthenticationStateProvider _authStateProvider
+@inject IClientStorage _clientStorage
+@inject IKeysAccessor trgma
+
+@* === Auto-Login Check or Login Form === *@
+@if (_checkingAutoLogin)
+{
+    <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Style="height: 100vh;">
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+        <MudText Typo="Typo.body1" Class="mt-2">@trgma.CheckingSession</MudText>
+    </MudStack>
+}
+else
+{
+<MudGrid Class="d-flex justify-center align-center" Style="height: 100vh;">
+    <MudItem xs="12" sm="8" md="4">
+        <MudCard Elevation="4" Class="pa-4">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h5" Align="Align.Center" Color="Color.Primary">@trgma.SuperAdminLogin</MudText>
+                    <MudText Typo="Typo.body2" Align="Align.Center" Class="mt-2">@trgma.EnterEmailForOtp</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+
+            @if (!_otpSent)
+            {
+                <!-- Step 1: Email Input -->
+                <MudCardContent>
+                    <MudTextField @bind-Value="Email"
+                                  Label="@trgma.SuperAdminEmail"
+                                  Placeholder="name@domain.com"
+                                  HelperText="@trgma.OTPHelperText"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense"
+                                  InputType="InputType.Email"
+                                  Required="true"
+                                  Disabled="_loading"
+                                  Class="mb-3" />
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               OnClick="RequestOtp"
+                               Disabled="_loading || string.IsNullOrWhiteSpace(Email)">
+                        @if (_loading)
+                        {
+                            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                            <MudText Class="ms-2">@trgma.SendingOTP</MudText>
+                        }
+                        else
+                        {
+                            <MudText>@trgma.SendOTP</MudText>
+                        }
+                    </MudButton>
+                </MudCardActions>
+            }
+            else
+            {
+                 <!-- Step 2: OTP Verification -->
+                <MudCardContent>
+                    <MudAlert Severity="Severity.Info" Class="mb-3">
+                        @trgma.OtpSentTo <strong>@Email</strong>.
+                    </MudAlert>
+
+                    <MudTextField @bind-Value="Otp"
+                                  Label="@trgma.EnterOTP"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense"
+                                  Required="true"
+                                  Disabled="_loading"
+                                  MaxLength="6"
+                                  Class="mb-3" />
+
+                    <MudLink Typo="Typo.caption" Color="Color.Secondary" OnClick="ResetOtpFlow" Class="d-block mb-2">
+                        @trgma.UseDifferentEmail
+                    </MudLink>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton Variant="Variant.Filled"
+                               Color="Color.Primary"
+                               OnClick="VerifyOtp"
+                               Disabled="_loading || string.IsNullOrWhiteSpace(Otp)">
+                        @if (_loading)
+                        {
+                            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                            <MudText Class="ms-2">@trgma.Verifying</MudText>
+                        }
+                        else
+                        {
+                            <MudText>@trgma.VerifyAndLogin</MudText>
+                        }
+                    </MudButton>
+                </MudCardActions>
+            }
+
+            <MudDivider Class="my-3" />
+            <MudCardActions Class="d-flex justify-center">
+                <MudLink Typo="Typo.body2" Href="/onboarding">← @trgma.BackToOnboarding</MudLink>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+}
+
+@code {
+    private string Email { get; set; } = "";
+    private string Otp { get; set; } = "";
+    private bool _loading = false;
+    private bool _otpSent = false;
+    private bool _checkingAutoLogin = true;
+
+    // ====== Token storage for auto-login ======
+    private const string TokenKey = "superadmin:token:v1";
+
+    private sealed class StoredToken
+    {
+        public string? Token { get; set; }
+        public string? Email { get; set; }
+        public long Exp { get; set; } // Unix seconds
+    }
+
+    /// <summary>
+    /// Get token TTL based on build configuration.
+    /// DEBUG: 365 days for easy development
+    /// RELEASE: 1 day for security
+    /// </summary>
+    private static TimeSpan GetTokenTtl()
+    {
+#if DEBUG
+        return TimeSpan.FromDays(365);
+#else
+        return TimeSpan.FromDays(1);
+#endif
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        // Try auto-login from stored token
+        var autoLoginSuccess = await TryAutoLoginAsync();
+        if (!autoLoginSuccess)
+        {
+            _checkingAutoLogin = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task<bool> TryAutoLoginAsync()
+    {
+        try
+        {
+            var json = await _clientStorage.GetAsync(TokenKey);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                System.Diagnostics.Debug.WriteLine("[SuperAdminLogin] No stored token found");
+                return false;
+            }
+
+            var stored = JsonSerializer.Deserialize<StoredToken>(json);
+            if (stored == null || string.IsNullOrEmpty(stored.Token))
+                return false;
+
+            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (now > stored.Exp)
+            {
+                System.Diagnostics.Debug.WriteLine("[SuperAdminLogin] Stored token expired, clearing...");
+                await ClearStoredTokenAsync();
+                return false;
+            }
+
+            // Token is valid, set it and navigate
+            System.Diagnostics.Debug.WriteLine("[SuperAdminLogin] Valid token found, auto-logging in...");
+            ApiService.AuthToken = stored.Token;
+            authenticationService.SetAuthentication(true);
+            _authStateProvider.NotifyAuthenticationStateChanged();
+
+            _nav.NavigateTo("/superadmin/dashboard");
+            return true;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SuperAdminLogin] Auto-login error: {ex.Message}");
+            return false;
+        }
+    }
+
+    private async Task RequestOtp()
+    {
+        if (string.IsNullOrWhiteSpace(Email))
+        {
+            await _msg.PublishErrors(trgma.PleaseEnterEmail);
+            return;
+        }
+
+        _loading = true;
+        StateHasChanged();
+
+        try
+        {
+            var requestDto = new OtpRequestDto { Email = Email };
+
+            var result = await ApiService.ExecuteApi<object>(
+                http: _http,
+                endpoint: "api/Authentication/Login/Otp",
+                data: requestDto,
+                msgCenter: _msg,
+                setIsLoading: null
+            );
+
+            if (result != null && result.Success)
+            {
+                _otpSent = true;
+                await _msg.NotifySuccess(trgma.OtpSentSuccessfully);
+            }
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task VerifyOtp()
+    {
+        if (string.IsNullOrWhiteSpace(Otp))
+        {
+            await _msg.PublishErrors(trgma.PleaseEnterOtp);
+            return;
+        }
+
+        _loading = true;
+        StateHasChanged();
+
+        try
+        {
+            var verifyDto = new OtpVerifyDto { Email = Email, Otp = Otp };
+
+            var result = await ApiService.ExecuteApi<AuthResponseDto>(
+                http: _http,
+                endpoint: "api/Authentication/Login/Verify",
+                data: verifyDto,
+                msgCenter: _msg,
+                setIsLoading: null
+            );
+
+            if (result != null && result.Success && result.Data != null)
+            {
+                // Set Token and authenticate
+                ApiService.AuthToken = result.Data.Token;
+                authenticationService.SetAuthentication(true);
+
+                // Notify Blazor authorization system
+                _authStateProvider.NotifyAuthenticationStateChanged();
+
+                // Save token for auto-login
+                await SaveTokenAsync(result.Data.Token, Email);
+
+                await _msg.NotifySuccess(trgma.LoginSuccessfulRedirecting);
+                _nav.NavigateTo("/superadmin/dashboard");
+            }
+            else if (result?.Messages != null)
+            {
+                await _msg.PublishErrors(result.Messages);
+            }
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void ResetOtpFlow()
+    {
+        _otpSent = false;
+        Otp = "";
+        StateHasChanged();
+    }
+
+    // ====== Token storage methods ======
+    private async Task SaveTokenAsync(string token, string email)
+    {
+        try
+        {
+            var payload = new StoredToken
+            {
+                Token = token,
+                Email = email,
+                Exp = DateTimeOffset.UtcNow.Add(GetTokenTtl()).ToUnixTimeSeconds()
+            };
+            var json = JsonSerializer.Serialize(payload);
+            await _clientStorage.SetAsync(TokenKey, json);
+            System.Diagnostics.Debug.WriteLine($"[SuperAdminLogin] Token saved with TTL: {GetTokenTtl().TotalDays} days");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SuperAdminLogin] Failed to save token: {ex.Message}");
+        }
+    }
+
+    private async Task ClearStoredTokenAsync()
+    {
+        try { await _clientStorage.RemoveAsync(TokenKey); } catch { }
+    }
+}

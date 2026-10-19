@@ -1,0 +1,115 @@
+﻿@using One.Shared.Themes.MudBlazorThemes
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Routing
+@using MudBlazor
+@inject UiState UI
+@inject NavigationManager Navigation
+@inject AuthenticationService authenticationService
+@inject One.Shared.Services.MessagesCenter _msg
+@inject ISnackbar Snackbar
+@implements IDisposable
+
+<MudThemeProvider Theme="@CurrentTheme" IsDarkMode="@UI.IsDark" />
+
+@using Microsoft.AspNetCore.Components.Authorization
+
+<MudRTLProvider RightToLeft="@UI.IsRtl">
+    <MudPopoverProvider />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
+
+    <LocalizeScope>
+        <CascadingAuthenticationState>
+            <Router AppAssembly="@typeof(Routes).Assembly">
+                <Found Context="routeData">
+                    <ErrorBoundary>
+                        <ChildContent>
+                            <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
+                            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+                        </ChildContent>
+
+                        <ErrorContent>
+                            #if DEBUG
+                            @RenderDevError()
+                            #else
+                            <LayoutView Layout="@typeof(Layout.MainLayout)">
+                                <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Dense="true" Class="mb-3">
+                                    @trgma.UnexpectedErrorOccurred
+                                </MudAlert>
+                                <MudButton Color="Color.Primary" OnClick="@(() => Navigation.NavigateTo(Navigation.Uri, replace: true))">
+                                    @trgma.TryAgain
+                                </MudButton>
+                            </LayoutView>
+                            #endif
+                        </ErrorContent>
+                    </ErrorBoundary>
+                </Found>
+
+                <NotFound>
+                    <LayoutView Layout="@typeof(Layout.MainLayout)">
+                        <MudAlert Severity="Severity.Warning" Dense="true">@trgma.PageNotFound</MudAlert>
+                    </LayoutView>
+                </NotFound>
+            </Router>
+        </CascadingAuthenticationState>
+    </LocalizeScope>
+</MudRTLProvider>
+
+@code {
+    private MudTheme CurrentTheme => UI.IsDark ? AppTheme.Dark : AppTheme.Light;
+    private static bool _uiHandlersRegistered = false;
+
+    protected override void OnInitialized()
+    {
+        // ✅ نفس منطق التوجيه المستقر
+        if (!authenticationService.CheckAuthentication())
+            Navigation.NavigateTo("/login");
+
+        // ✅ Global 401 Redirection using shared ApiService callback
+        One.Shared.Services.ApiService.OnUnauthorizedAsync = async () =>
+        {
+            // Log out locally (clear session/state)
+            authenticationService.SetAuthentication(false);
+
+            // Dispatch to UI thread to navigate
+            await InvokeAsync(() => Navigation.NavigateTo("/login", forceLoad: true));
+        };
+
+        UI.OnChange += StateHasChanged;
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return Task.CompletedTask;
+
+        HttpClientExtensions.CaptureUiContext(); // ✅ يمسك UI SyncContext بتاع Blazor
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        UI.OnChange -= StateHasChanged;
+    }
+
+#if DEBUG
+    private RenderFragment RenderDevError() => builder =>
+    {
+        builder.OpenElement(0, "div");
+        builder.AddAttribute(1, "style", "padding:16px;border:1px solid #f00;background:#fff3f3;color:#700;font-family:sans-serif;direction:rtl");
+        builder.AddContent(2, (RenderFragment)((b2) =>
+        {
+            b2.OpenElement(3, "div");
+            b2.AddAttribute(4, "style", "font-weight:bold;margin-bottom:8px");
+            b2.AddContent(5, "حدث خطأ غير متوقع أثناء عرض الصفحة.");
+            b2.CloseElement();
+
+            b2.OpenElement(6, "button");
+            b2.AddAttribute(7, "style", "margin-top:12px;padding:8px 12px;cursor:pointer;border:1px solid #700;background:#fff;color:#700;border-radius:6px");
+            b2.AddAttribute(8, "onclick", EventCallback.Factory.Create(this, () => Navigation.NavigateTo(Navigation.Uri, replace:true)));
+            b2.AddContent(9, "إعادة التحميل");
+            b2.CloseElement();
+        }));
+        builder.CloseElement();
+    };
+#endif
+}

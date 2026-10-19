@@ -1,0 +1,106 @@
+@page "/sysadmin/companies"
+@using One.Shared.Services
+@using One.Domain.Entities.Identity
+@using One.Domain.Base
+@inject HttpClient _http
+@inject MessagesCenter _msg
+@inject NavigationManager _nav
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudText Typo="Typo.h5" GutterBottom="true">@trgma.DebugCompanies</MudText>
+    @if (_companies == null)
+    {
+         <MudProgressCircular Indeterminate="true" />
+    }
+    else
+    {
+        <MudTable Items="_companies" Hover="true" Striped="true">
+            <HeaderContent>
+                <MudTh>@trgma.ID</MudTh>
+                <MudTh>@trgma.Name</MudTh>
+                <MudTh>@trgma.Code</MudTh>
+                <MudTh>@trgma.Active</MudTh>
+                <MudTh>@trgma.Users</MudTh>
+                <MudTh>@trgma.Actions</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="@trgma.ID">@context.Id</MudTd>
+                <MudTd DataLabel="@trgma.Name">@context.Name</MudTd>
+                <MudTd DataLabel="@trgma.Code">@context.Code</MudTd>
+                <MudTd DataLabel="@trgma.Active">@context.IsActive</MudTd>
+                <MudTd DataLabel="@trgma.Users">@context.Users?.Count</MudTd>
+                <MudTd DataLabel="@trgma.Actions">
+                    <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" OnClick="@(() => _nav.NavigateTo($"/register-user/{context.Id}"))" Title="@trgma.CreateAdmin" Size="Size.Small" Color="Color.Primary" />
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
+
+    <MudPaper Class="pa-4 mt-4">
+        <MudText Typo="Typo.h6">@trgma.CreateNewCompany</MudText>
+        <MudGrid>
+            <MudItem xs="5">
+                <MudTextField @bind-Value="_newName" Label="@trgma.Name" />
+            </MudItem>
+            <MudItem xs="5">
+                <MudTextField @bind-Value="_newCode" Label="@trgma.Code" />
+            </MudItem>
+            <MudItem xs="2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CreateCompany">@trgma.Create</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private List<Company>? _companies;
+    private string _newName = "";
+    private string _newCode = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        var result = await ApiService.ExecuteSimpleApi<One.Domain.Base.Result<List<Company>>>(
+            http: _http,
+            endpoint: "api/Companies/List",
+            data: null,
+            msgCenter: _msg,
+            method: HttpMethod.Get,
+            jsonOptions: new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+        );
+
+        if (result != null && result.Success)
+        {
+            _companies = result.Data;
+        }
+    }
+
+    private async Task CreateCompany()
+    {
+        if (string.IsNullOrWhiteSpace(_newName) || string.IsNullOrWhiteSpace(_newCode))
+        {
+            await _msg.PublishErrors(trgma.EnterNameAndCode);
+            return;
+        }
+
+        var result = await ApiService.ExecuteSimpleApi<One.Domain.Base.Result<Company>>(
+            http: _http,
+            endpoint: "api/Companies/Create",
+            data: new { name = _newName, code = _newCode },
+            msgCenter: _msg,
+            method: HttpMethod.Post,
+            jsonOptions: new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+        );
+
+        if (result != null && result.Success)
+        {
+             await _msg.NotifySuccess(trgma.CreatedSuccessfully);
+             _newName = ""; _newCode = "";
+             await LoadData();
+        }
+    }
+}

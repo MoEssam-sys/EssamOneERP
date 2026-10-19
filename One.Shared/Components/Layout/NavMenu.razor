@@ -1,0 +1,97 @@
+﻿@inject NavigationManager Nav
+@inject IKeysAccessor trgma
+@using One.Shared.Constants
+@using Microsoft.AspNetCore.Components.Authorization
+
+<MudNavMenu Dense="true" Class="pa-2">
+
+    <!-- Guest / Public -->
+    <AuthorizeView>
+        <NotAuthorized>
+            <MudNavLink Href="/login" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Login">@trgma.Login</MudNavLink>
+        </NotAuthorized>
+    </AuthorizeView>
+
+    <!-- SuperAdmin Section -->
+    <AuthorizeView Roles="@Roles.SuperAdmin">
+        <Authorized>
+            <MudText Typo="Typo.overline" Class="mt-2 mb-1 px-2 opacity-75">@trgma.Administration</MudText>
+            <MudNavLink Href="/superadmin/dashboard" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Dashboard">@trgma.Dashboard</MudNavLink>
+            <MudNavLink Href="/sysadmin/companies" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Business">@trgma.ManageCompanies</MudNavLink>
+            <MudNavLink Href="/users-management" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PeopleAlt">@trgma.ManageUsers</MudNavLink>
+            <MudNavLink Href="/register-user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PersonAdd">@trgma.RegisterUser</MudNavLink>
+            <MudDivider Class="my-2" />
+        </Authorized>
+    </AuthorizeView>
+
+    <!-- CompanyAdmin Section -->
+    <AuthorizeView Roles="@Roles.CompanyAdmin">
+        <Authorized>
+             <MudText Typo="Typo.overline" Class="mt-2 mb-1 px-2 opacity-75">@trgma.CompanyAdmin</MudText>
+             <MudNavLink Href="/users-management" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PeopleAlt">@trgma.ManageUsers</MudNavLink>
+             <MudNavLink Href="/register-user" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PersonAdd">@trgma.RegisterUser</MudNavLink>
+             <MudDivider Class="my-2" />
+        </Authorized>
+    </AuthorizeView>
+
+    <!-- Business Modules - Available to both User and CompanyAdmin -->
+    <AuthorizeView Roles="@($"{Roles.User},{Roles.CompanyAdmin}")">
+        <Authorized>
+            <MudText Typo="Typo.overline" Class="mt-2 mb-1 px-2 opacity-75">@trgma.Navigation</MudText>
+
+            <!-- Dashboard -->
+            <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">@trgma.Dashboard</MudNavLink>
+
+            <!-- Sales -->
+            <MudNavGroup Title="@trgma.Sales" Icon="@Icons.Material.Filled.PointOfSale" Expanded="@IsSalesOpen">
+                <MudNavLink Href="/sales" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">@trgma.Dashboard</MudNavLink>
+                <MudNavLink Href="/sales/invoices" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.RequestQuote">@trgma.Invoices</MudNavLink>
+                <MudNavLink Href="/sales/orders" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.ReceiptLong">@trgma.Orders</MudNavLink>
+                <MudNavLink Href="/sales/customers" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Groups">@trgma.Customers</MudNavLink>
+                <MudNavLink Href="/sales/brands" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Category">@trgma.Brands</MudNavLink>
+                <MudNavLink Href="/sales/branches" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Store">@trgma.Branches</MudNavLink>
+            </MudNavGroup>
+
+            <!-- Purchases -->
+            <MudNavGroup Title="@trgma.Purchases" Icon="@Icons.Material.Filled.ShoppingCart" Expanded="@IsPurchasesOpen">
+                <MudNavLink Href="/purchases/po" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Inventory2">@trgma.PurchaseOrders</MudNavLink>
+                <MudNavLink Href="/purchases/vendors" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.LocalShipping">@trgma.Vendors</MudNavLink>
+            </MudNavGroup>
+
+            <!-- Stocks -->
+            <MudNavGroup Title="@trgma.Stocks" Icon="@Icons.Material.Filled.Inventory" Expanded="@IsWarehouseOpen">
+                <MudNavLink Href="/stocks/warehouses" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Warehouse">@trgma.Warehouses</MudNavLink>
+            </MudNavGroup>
+
+            <!-- Settings -->
+            <MudNavGroup Title="@trgma.Settings" Icon="@Icons.Material.Filled.Settings" Expanded="@IsSettingsOpen">
+                <MudNavLink Href="/security" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Security">@trgma.Security</MudNavLink>
+            </MudNavGroup>
+        </Authorized>
+    </AuthorizeView>
+
+    <!-- Shared / Common -->
+    <AuthorizeView>
+        <Authorized>
+             <MudNavLink Href="/about" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Info">@trgma.About</MudNavLink>
+        </Authorized>
+    </AuthorizeView>
+
+</MudNavMenu>
+
+@code {
+    bool IsSalesOpen => Nav.Uri.Contains("/sales", StringComparison.OrdinalIgnoreCase);
+    bool IsPurchasesOpen => Nav.Uri.Contains("/purchases", StringComparison.OrdinalIgnoreCase);
+    bool IsWarehouseOpen => Nav.Uri.Contains("/warehouse", StringComparison.OrdinalIgnoreCase)
+                           || Nav.Uri.Contains("/stocks", StringComparison.OrdinalIgnoreCase);
+    bool IsHROpen => Nav.Uri.Contains("/hr", StringComparison.OrdinalIgnoreCase);
+    bool IsAccountingOpen => Nav.Uri.Contains("/accounting", StringComparison.OrdinalIgnoreCase);
+    bool IsSettingsOpen => Nav.Uri.Contains("/users", StringComparison.OrdinalIgnoreCase)
+                           || Nav.Uri.Contains("/security", StringComparison.OrdinalIgnoreCase);
+
+    protected override async Task OnInitializedAsync()
+    {
+        _localizer.InitLocalizedComponent(this);
+        await Task.CompletedTask;
+    }
+}

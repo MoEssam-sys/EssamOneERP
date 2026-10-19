@@ -1,0 +1,179 @@
+@page "/superadmin/dashboard"
+@using One.Domain.DTOs
+@using One.Shared.Services
+@inject HttpClient _http
+@inject NavigationManager _nav
+@inject MessagesCenter _msg
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "SuperAdmin")]
+
+    <MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
+        <MudText Typo="Typo.h4" GutterBottom="true" Color="Color.Primary">@trgma.SuperAdminDashboard</MudText>
+        <MudText Typo="Typo.subtitle1" Class="mb-4">@trgma.OverviewRegisterCompaniesAndStats</MudText>
+
+        @* === Loading State === *@
+        @if (_loading)
+        {
+            <MudStack AlignItems="AlignItems.Center" Class="my-8">
+                <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+                <MudText Typo="Typo.body1" Class="mt-2">@trgma.LoadingDashboardData</MudText>
+            </MudStack>
+        }
+        @* === Error State === *@
+        else if (_hasError)
+        {
+            <MudAlert Severity="Severity.Error" Class="mb-4" Variant="Variant.Filled">
+                <MudText Typo="Typo.body1"><strong>@trgma.FailedToLoadDashboard:</strong></MudText>
+                <MudText Typo="Typo.body2">@_errorMessage</MudText>
+            </MudAlert>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(async () => await LoadData())" StartIcon="@Icons.Material.Filled.Refresh">
+                @trgma.TryAgain
+            </MudButton>
+        }
+        @* === Success State === *@
+        else
+        {
+            <!-- Metrics / Cards Overview -->
+            <MudGrid Class="mb-4">
+                <MudItem xs="12" sm="4">
+                    <MudCard Elevation="3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">@trgma.TotalCompanies</MudText>
+                            <MudText Typo="Typo.h3" Color="Color.Info">@_companies.Count</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudCard Elevation="3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">@trgma.TotalUsers</MudText>
+                            <MudText Typo="Typo.h3" Color="Color.Success">@_companies.Sum(x => x.UsersCount)</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudCard Elevation="3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6">@trgma.TotalAdmins</MudText>
+                            <MudText Typo="Typo.h3" Color="Color.Warning">@_companies.Sum(x => x.AdminsCount)</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+
+            <!-- Search & Filter -->
+            <MudGrid Class="align-center mb-4">
+                <MudItem xs="12" sm="6" md="4">
+                    <MudTextField @bind-Value="_searchString" Placeholder="@trgma.SearchCompanyPlaceholder" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Immediate="true" />
+                </MudItem>
+                 <MudItem xs="12" sm="6" md="4">
+                     <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.AddBusiness" OnClick="@(() => _nav.NavigateTo("/sysadmin/companies"))">@trgma.ManageCompanies</MudButton>
+                </MudItem>
+            </MudGrid>
+
+            <!-- Company Cards List -->
+            @if (!FilteredCompanies.Any())
+            {
+                <MudAlert Severity="Severity.Info">@trgma.NoCompaniesFound</MudAlert>
+            }
+            else
+            {
+                <MudGrid>
+                    @foreach (var company in FilteredCompanies)
+                    {
+                        <MudItem xs="12" sm="6" md="4" lg="3">
+                            <MudCard Elevation="4" Class="d-flex flex-column" Style="height: 100%; border-left: 5px solid var(--mud-palette-primary);">
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudText Typo="Typo.h6">@company.Name</MudText>
+                                        <MudText Typo="Typo.caption" Color="Color.Secondary">@trgma.Code: @company.Code</MudText>
+                                    </CardHeaderContent>
+                                    <CardHeaderActions>
+                                        <MudIconButton Icon="@Icons.Material.Filled.ArrowForward" Color="Color.Default" />
+                                    </CardHeaderActions>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <MudStack Row="true" Spacing="4">
+                                        <MudText Typo="Typo.body2">@trgma.Users: <strong>@company.UsersCount</strong></MudText>
+                                        <MudText Typo="Typo.body2">@trgma.Admins: <strong>@company.AdminsCount</strong></MudText>
+                                    </MudStack>
+                                    <MudText Typo="Typo.body2" Class="mt-2" Color="@(company.IsActive ? Color.Success : Color.Error)">
+                                        @trgma.Status: @(company.IsActive ? trgma.Active : trgma.Inactive)
+                                    </MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Text" Color="Color.Secondary" OnClick="@(() => _nav.NavigateTo($"/superadmin/companies/{company.Id}"))">@trgma.ViewDetails</MudButton>
+                                    <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => _nav.NavigateTo($"/register-user/{company.Id}"))">@trgma.AddUser</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        </MudItem>
+                    }
+                </MudGrid>
+            }
+        }
+    </MudContainer>
+
+@code {
+    private bool _loading = true;
+    private bool _hasError = false;
+    private string _errorMessage = "";
+    private List<CompanySummaryDto> _companies = new();
+    private string _searchString = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        System.Diagnostics.Debug.WriteLine("[SuperAdminDashboard] OnInitializedAsync started");
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        _loading = true;
+        _hasError = false;
+        _errorMessage = "";
+        StateHasChanged();
+
+        try
+        {
+            System.Diagnostics.Debug.WriteLine("[SuperAdminDashboard] Loading data from API...");
+            System.Diagnostics.Debug.WriteLine($"[SuperAdminDashboard] AuthToken present: {!string.IsNullOrEmpty(ApiService.AuthToken)}");
+
+            var result = await ApiService.ExecuteSimpleApi<One.Domain.Base.Result<List<CompanySummaryDto>>>(
+                 http: _http,
+                 endpoint: "api/Authentication/Companies/Summary",
+                 data: null,
+                 msgCenter: _msg,
+                 method: HttpMethod.Get,
+                  jsonOptions: new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            if (result != null && result.Success && result.Data != null)
+            {
+                _companies = result.Data;
+                System.Diagnostics.Debug.WriteLine($"[SuperAdminDashboard] Loaded {_companies.Count} companies successfully");
+            }
+            else
+            {
+                _hasError = true;
+                _errorMessage = result?.Messages?.FirstOrDefault() ?? "Failed to load companies data. Please check your connection.";
+                System.Diagnostics.Debug.WriteLine($"[SuperAdminDashboard] API returned error: {_errorMessage}");
+            }
+        }
+        catch (Exception ex)
+        {
+            _hasError = true;
+            _errorMessage = $"Error: {ex.Message}";
+            System.Diagnostics.Debug.WriteLine($"[SuperAdminDashboard] Exception: {ex}");
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private IEnumerable<CompanySummaryDto> FilteredCompanies =>
+        _companies.Where(c =>
+            string.IsNullOrWhiteSpace(_searchString) ||
+            c.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ||
+            c.Code.Contains(_searchString, StringComparison.OrdinalIgnoreCase));
+}

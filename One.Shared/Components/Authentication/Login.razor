@@ -1,0 +1,225 @@
+﻿@page "/login"
+@using System.Text.Json
+@using One.Domain.DTOs
+@using One.Domain.DTOs.Identity
+@using One.Shared.Services
+@using One.Shared.Services.Platform
+@using One.Shared.Services.Logging
+@inject AuthenticationService authenticationService
+@inject HttpClient _http
+@inject NavigationManager _nav
+@inject MessagesCenter _msg
+@inject JwtAuthenticationStateProvider _authStateProvider
+@inject IClientStorage _clientStorage
+@inject IClientLogger _logger
+@inject IKeysAccessor trgma
+
+<MudGrid Class="d-flex justify-content-center align-items-center" Style="height: 100vh;">
+    <MudItem xs="12" md="5" Class="mx-auto">
+        <MudCard Class="pa-4 shadow-lg">
+            <MudText Typo="Typo.h5" Class="fw-bold mb-3 text-center">@trgma.Login</MudText>
+            <MudDivider Class="mb-3" />
+
+            @* === Company Info Display === *@
+            @if (!string.IsNullOrEmpty(_companyName))
+            {
+                <MudAlert Severity="Severity.Info" Class="mb-3" Dense="true" Variant="Variant.Text">
+                    <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                        <MudIcon Icon="@Icons.Material.Filled.Business" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">
+                            @trgma.LoggingInto: <strong>@_companyName</strong> (@_companyCode)
+                        </MudText>
+                    </MudStack>
+                </MudAlert>
+            }
+
+            <MudForm>
+                <MudTextField @bind-Value="Username"
+                              Label="@trgma.Username"
+                              Required="true"
+                              Margin="Margin.Dense"
+                              Variant="Variant.Outlined"
+                              FullWidth="true" />
+
+                <MudTextField @bind-Value="Password"
+                              Label="@trgma.Password"
+                              InputType="InputType.Password"
+                              Required="true"
+                              Margin="Margin.Dense"
+                              Variant="Variant.Outlined"
+                              FullWidth="true" />
+
+                <MudStack Row Class="mt-3" Spacing="2">
+                    <OneLoadingBtn ButtonText="@trgma.Login"
+                                   LoadingText="@trgma.Checking"
+                                   Color="Color.Primary"
+                                   OnClick="@(()=>HandleLogin(false))" />
+                </MudStack>
+            </MudForm>
+
+            @* === Change Company Link === *@
+            <MudDivider Class="my-3" />
+            <MudStack Row="true" Justify="Justify.Center">
+                <MudLink Typo="Typo.body2" Href="/onboarding" Color="Color.Secondary">
+                    <MudIcon Icon="@Icons.Material.Filled.SwapHoriz" Size="Size.Small" Class="me-1" />
+                    @trgma.ChangeCompany
+                </MudLink>
+            </MudStack>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private string Username = string.Empty;
+    private string Password = string.Empty;
+    private string _companyCode = "";
+    private string _companyName = "";
+
+    // ====== Secure token storage (Fix #2: no more plaintext passwords) ======
+    private const string TokenKey = "auth:token:v2";
+    private const string CompanyCodeKey = "company_code";
+    private const string CompanyNameKey = "company_name";
+
+    private sealed class TokenPayload
+    {
+        public string? Token { get; set; }
+        public long Exp { get; set; } // Unix seconds (from JWT expiration)
+    }
+
+    /// <summary>
+    /// Get credential TTL based on build configuration.
+    /// DEBUG: 365 days for easy development
+    /// RELEASE: 1 day for security
+    /// </summary>
+    private static TimeSpan GetCredentialTtl()
+    {
+#if DEBUG
+        return TimeSpan.FromDays(365);
+#else
+        return TimeSpan.FromDays(1);
+#endif
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        await LoadCompanyInfoAsync();
+
+        // Fix #2: Try to auto-login using a previously saved JWT token
+        var storedToken = await TryLoadTokenAsync();
+        if (storedToken is not null)
+        {
+            // Use the stored token directly — no password re-submission
+            ApiService.AuthToken = storedToken;
+            authenticationService.SetAuthentication(true);
+            _authStateProvider.NotifyAuthenticationStateChanged();
+            _nav.NavigateTo("/");
+        }
+    }
+
+    private async Task LoadCompanyInfoAsync()
+    {
+        try
+        {
+            _companyCode = await _clientStorage.GetAsync(CompanyCodeKey) ?? "";
+            _companyName = await _clientStorage.GetAsync(CompanyNameKey) ?? "";
+            StateHasChanged();
+        }
+        catch { }
+    }
+
+    private async Task HandleLogin(bool fromAuto)
+    {
+        var loginDto = new LoginDto
+        {
+            UserName = Username,
+            Password = Password,
+        };
+
+        var res = await ApiService.ExecuteApi<AuthResponseDto>(
+            http: _http,
+            endpoint: "api/Authentication/Login",
+            data: loginDto,
+            msgCenter: _msg,
+            setIsLoading: null
+        );
+
+        if (res != null && res.Success && res.Data != null)
+        {
+            // Set Token
+            ApiService.AuthToken = res.Data.Token;
+            authenticationService.SetAuthentication(true);
+
+            // Notify Blazor authorization system
+            _authStateProvider.NotifyAuthenticationStateChanged();
+
+            // Log Success
+            await _logger.LogInfo(trgma.UserLoggedInSuccessfully, action: "Login");
+
+            // Fix #2: Save only the JWT token, not the password
+            await SaveTokenAsync(res.Data.Token!, res.Data.Expiration);
+
+            _nav.NavigateTo("/");
+        }
+        else
+        {
+            if (fromAuto)
+                await ClearTokenAsync();
+            else if (res?.Messages != null)
+                await _msg.PublishErrors(res.Messages);
+        }
+    }
+
+    // ====== Token-only storage helpers (Fix #2) ======
+    private async Task SaveTokenAsync(string token, DateTime expiration)
+    {
+        try
+        {
+            var payload = new TokenPayload
+            {
+                Token = token,
+                Exp = new DateTimeOffset(expiration).ToUnixTimeSeconds()
+            };
+            var json = JsonSerializer.Serialize(payload);
+            await _clientStorage.SetAsync(TokenKey, json);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[Login] Failed to save token: {ex.Message}");
+        }
+    }
+
+    /// <summary>Returns the stored JWT token if valid and not expired, otherwise null.</summary>
+    private async Task<string?> TryLoadTokenAsync()
+    {
+        try
+        {
+            var json = await _clientStorage.GetAsync(TokenKey);
+            if (string.IsNullOrWhiteSpace(json)) return null;
+
+            var payload = JsonSerializer.Deserialize<TokenPayload>(json);
+            if (payload?.Token is null) return null;
+
+            var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            if (now >= payload.Exp)
+            {
+                System.Diagnostics.Debug.WriteLine("[Login] Stored token expired, clearing...");
+                await ClearTokenAsync();
+                return null;
+            }
+
+            System.Diagnostics.Debug.WriteLine("[Login] Valid token found, auto-logging in...");
+            return payload.Token;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    private async Task ClearTokenAsync()
+    {
+        try { await _clientStorage.RemoveAsync(TokenKey); } catch { }
+    }
+}

@@ -1,0 +1,285 @@
+@page "/users-management"
+@page "/users-management/{CompanyId:int}"
+@using One.Domain.DTOs
+@using One.Shared.Services
+@using One.Shared.Services.Extenstions
+@using One.Shared.Constants
+@inject HttpClient _http
+@inject NavigationManager _nav
+@inject MessagesCenter _msg
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "SuperAdmin,CompanyAdmin")]
+
+@inject IKeysAccessor trgma
+
+<MudContainer MaxWidth="MaxWidth.False" Class="mt-4">
+    <MudText Typo="Typo.h4" GutterBottom="true" Color="Color.Primary">@trgma.UsersManagement</MudText>
+    <MudText Typo="Typo.subtitle1" Class="mb-4">@trgma.ManageUsersDescription</MudText>
+
+    @if (_loading)
+    {
+        <MudStack AlignItems="AlignItems.Center" Class="my-8">
+            <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+            <MudText Typo="Typo.body1" Class="mt-2">@trgma.LoadingUsers</MudText>
+        </MudStack>
+    }
+    else if (_hasError)
+    {
+        <MudAlert Severity="Severity.Error" Class="mb-4" Variant="Variant.Filled">
+            <MudText Typo="Typo.body1"><strong>@trgma.FailedToLoadUsers</strong></MudText>
+            <MudText Typo="Typo.body2">@_errorMessage</MudText>
+        </MudAlert>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@(async () => await LoadData())" StartIcon="@Icons.Material.Filled.Refresh">
+            @trgma.Retry
+        </MudButton>
+    }
+    else
+    {
+        <!-- Filters & Actions -->
+        <MudGrid Class="align-center mb-4">
+            <MudItem xs="12" sm="6" md="4">
+                <MudTextField @bind-Value="_searchString" Placeholder="@trgma.SearchUsersPlaceholder" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Immediate="true" />
+            </MudItem>
+            @if (_isSuperAdmin)
+            {
+                <MudItem xs="12" sm="6" md="3">
+                    <MudSelect T="int?" @bind-Value="_selectedCompanyId" Placeholder="@trgma.FilterByCompany" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Business" Clearable="true" Dense="true">
+                        <MudSelectItem T="int?" Value="@((int?)null)">@trgma.AllCompanies</MudSelectItem>
+                        @foreach (var company in _companies)
+                        {
+                            <MudSelectItem T="int?" Value="@company.Id">@company.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            }
+            <MudItem xs="12" sm="6" md="3">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.PersonAdd" OnClick="@NavigateToCreateUser">@trgma.AddUser</MudButton>
+            </MudItem>
+        </MudGrid>
+
+        <!-- Users Table -->
+        <MudTable Items="@FilteredUsers" Dense="true" Hover="true" Striped="true" Elevation="2">
+            <HeaderContent>
+                <MudTh>@trgma.Username</MudTh>
+                <MudTh>@trgma.FullName</MudTh>
+                <MudTh>@trgma.Email</MudTh>
+                <MudTh>@trgma.Roles</MudTh>
+                @if (_isSuperAdmin)
+                {
+                    <MudTh>@trgma.Company</MudTh>
+                }
+                <MudTh>@trgma.Status</MudTh>
+                <MudTh>@trgma.Actions</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="@trgma.Username">@context.UserName</MudTd>
+                <MudTd DataLabel="@trgma.FullName">@context.FirstName @context.LastName</MudTd>
+                <MudTd DataLabel="@trgma.Email">@context.Email</MudTd>
+                <MudTd DataLabel="@trgma.Roles">
+                    @foreach (var role in context.Roles)
+                    {
+                        <MudChip T="string" Size="Size.Small" Color="@GetRoleColor(role)" Class="mr-1">@role</MudChip>
+                    }
+                </MudTd>
+                @if (_isSuperAdmin)
+                {
+                    <MudTd DataLabel="@trgma.Company">@context.CompanyName</MudTd>
+                }
+                <MudTd DataLabel="@trgma.Status">
+                    <MudSwitch T="bool" Value="@context.IsActive" Color="Color.Success" ThumbIcon="@(context.IsActive ? Icons.Material.Filled.Check : Icons.Material.Filled.Close)" ThumbIconColor="@(context.IsActive ? Color.Success : Color.Error)" Disabled="true" />
+                </MudTd>
+                <MudTd DataLabel="@trgma.Actions">
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" Color="Color.Primary" Disabled="true" Title="@trgma.EditComingSoon" />
+                    @if (context.IsActive)
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="Color.Error" OnClick="@(() => ToggleUserStatus(context, false))" Title="@trgma.DisableUser" />
+                    }
+                    else
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.CheckCircle" Size="Size.Small" Color="Color.Success" OnClick="@(() => ToggleUserStatus(context, true))" Title="@trgma.EnableUser" />
+                    }
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+            <NoRecordsContent>
+                <MudText Typo="Typo.body1" Class="pa-4" Color="Color.Secondary">@trgma.NoUsersFound</MudText>
+            </NoRecordsContent>
+        </MudTable>
+    }
+</MudContainer>
+
+@code {
+    [Parameter] public int? CompanyId { get; set; }
+
+    private bool _loading = true;
+    private bool _hasError = false;
+    private string _errorMessage = "";
+    private string _searchString = "";
+    private int? _selectedCompanyId;
+    private bool _isSuperAdmin = false;
+
+    private List<UserManagementDto> _users = new();
+    private List<CompanySummaryDto> _companies = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _isSuperAdmin = CheckHasRole("SuperAdmin");
+        _selectedCompanyId = CompanyId;
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        _loading = true;
+        _hasError = false;
+        _errorMessage = "";
+        StateHasChanged();
+
+        try
+        {
+            // Load companies for SuperAdmin filter
+            if (_isSuperAdmin)
+            {
+                var companiesResult = await ApiService.ExecuteSimpleApi<One.Domain.Base.Result<List<CompanySummaryDto>>>(
+                    http: _http,
+                    endpoint: "api/Authentication/Companies/Summary",
+                    data: null,
+                    msgCenter: _msg,
+                    method: HttpMethod.Get,
+                    jsonOptions: new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+                );
+
+                if (companiesResult?.Success == true && companiesResult.Data != null)
+                {
+                    _companies = companiesResult.Data;
+                }
+            }
+
+            // Load users based on context
+            var endpoint = _isSuperAdmin
+                ? "api/Users"
+                : $"api/Users/my-company";
+
+            var result = await ApiService.ExecuteSimpleApi<One.Domain.Base.Result<List<UserManagementDto>>>(
+                http: _http,
+                endpoint: endpoint,
+                data: null,
+                msgCenter: _msg,
+                method: HttpMethod.Get,
+                jsonOptions: new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            if (result?.Success == true && result.Data != null)
+            {
+                _users = result.Data;
+            }
+            else
+            {
+                _hasError = true;
+                _errorMessage = result?.Messages?.FirstOrDefault() ?? "Failed to load users.";
+            }
+        }
+        catch (Exception ex)
+        {
+            _hasError = true;
+            _errorMessage = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            _loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private IEnumerable<UserManagementDto> FilteredUsers =>
+        _users.Where(u =>
+            (string.IsNullOrWhiteSpace(_searchString) ||
+             u.UserName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ||
+             u.Email.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ||
+             u.FirstName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ||
+             u.LastName.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) &&
+            (!_selectedCompanyId.HasValue || u.CompanyId == _selectedCompanyId.Value));
+
+    private void NavigateToCreateUser()
+    {
+        if (_selectedCompanyId.HasValue)
+        {
+            _nav.NavigateTo($"/register-user/{_selectedCompanyId.Value}");
+        }
+        else
+        {
+            _nav.NavigateTo("/register-user");
+        }
+    }
+
+    private async Task ToggleUserStatus(UserManagementDto user, bool enable)
+    {
+        try
+        {
+            var result = await _http.PostAsync($"api/Users/{user.Id}/toggle-status?isActive={enable}", null);
+            if (result.IsSuccessStatusCode)
+            {
+                 // Check logical success
+                 var content = await result.Content.ReadFromJsonAsync<One.Domain.Base.Result<bool>>(); // Struct or object?
+                 // Controller returns: Ok(new { success = true, data = result.Data }); -> Need helper
+
+                 // Using simple approach first to match pattern or better helper?
+                 // ApiService.ExecuteSimpleApi usually returns T.
+
+                 // Actually, standard pattern in this app seems to be ApiService or direct Http with wrappers.
+
+                 await _msg.NotifySuccess(trgma.UserStatusUpdatedSuccessfully);
+                 user.IsActive = enable;
+                 StateHasChanged();
+            }
+            else
+            {
+                await _msg.PublishErrors(new List<string> { trgma.FailedToUpdateStatus });
+            }
+        }
+        catch (Exception ex)
+        {
+            await _msg.PublishErrors(new List<string> { $"{trgma.FailedToUpdateStatus}: {ex.Message}" });
+        }
+    }
+
+    private Color GetRoleColor(string role) => role switch
+    {
+        "SuperAdmin" => Color.Error,
+        "CompanyAdmin" => Color.Warning,
+        "User" => Color.Success,
+        "Tester" => Color.Info,
+        _ => Color.Default
+    };
+
+    private bool CheckHasRole(string role)
+    {
+        if (string.IsNullOrEmpty(One.Shared.Services.ApiService.AuthToken)) return false;
+        try
+        {
+            var parts = One.Shared.Services.ApiService.AuthToken.Split('.');
+            if (parts.Length > 1)
+            {
+                var payload = DecodeBase64(parts[1]);
+                return payload.Contains($"\"role\":\"{role}\"")
+                    || payload.Contains($"\"{role}\"") && payload.Contains("\"role\":");
+            }
+        }
+        catch { }
+        return false;
+    }
+
+    private string DecodeBase64(string input)
+    {
+        var output = input.Replace('-', '+').Replace('_', '/');
+        switch (output.Length % 4)
+        {
+            case 0: break;
+            case 2: output += "=="; break;
+            case 3: output += "="; break;
+            default: throw new Exception("Illegal base64url string!");
+        }
+        return System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(output));
+    }
+}

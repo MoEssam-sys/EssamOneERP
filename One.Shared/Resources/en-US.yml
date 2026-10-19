@@ -1,0 +1,216 @@
+Welcome: "Welcome, {username}!"
+RegisteredSuccessfully: Registered Successfully
+Save: Save
+Update: Update
+Delete: Delete
+Clear: Clear
+Navigation: Navigation
+Dashboard: Dashboard
+Servers: Servers
+Sales: Sales
+Purchases: Purchases
+Warehouse: Warehouse
+HR: HR
+Accounting: Accounting
+Settings: Settings
+About: About
+Orders: Orders
+Invoices: Invoices
+Customers: Customers
+Returns: Returns
+PurchaseOrders: Purchase Orders
+Vendors: Vendors
+Bills: Bills
+Items: Items
+Stock: Stock
+Movements: Movements
+Adjustments: Adjustments
+Transfers: Transfers
+Employees: Employees
+Attendance: Attendance
+Payroll: Payroll
+JournalEntries: Journal Entries
+ChartOfAccounts: Chart Of Accounts
+Reports: Reports
+TrialBalance: Trial Balance
+Users: Users
+Security: Security
+Company: Company
+Taxes: Taxes
+Numbering: Numbering
+PageNotFound: Page Not Found
+ChangeStyle: Change Style
+LogOut: LogOut
+OpenCloseDrawer: Open/Close Drawer
+Apply: Apply
+SalesDashboard: Sales Dashboard
+SalesLast12Weeks: Sales Last 12 Weeks
+RecentInvoices: Recent Invoices
+Number: Number
+Customer: Customer
+Date: Date
+Total: Total
+Status: Status
+TotalSalesMonth: Total Sales Month
+UnpaidInvoices: Unpaid Invoices
+OpenOrders: Open Orders
+LowStockAlerts: Low Stock Alerts
+Week: Week
+NewOrder: New Order
+Search: Search
+Open: Open
+Closed: Closed
+Cancelled: Cancelled
+DateRange: Date Range
+Resource: "Resource, {Status}"
+OrderDetails: OrderDetails
+Item: Item
+Qty: Qty
+Price: Price
+Paid: Paid
+Unpaid: Unpaid
+Loading: Loading
+InvoiceDetails: Invoice Details
+Notes: Notes
+InvoiceLines: Invoice Lines
+Invoice: Invoice
+Brands: Brands
+Branches: Branches
+Details: Details
+Code: Code
+Name: Name
+Active: Active
+Inactive: Inactive
+Create: Create
+Saving: Saving
+Cancel: Cancel
+BrandsList: Brands List
+SearchByCodeOrName: Search By Code Or Name
+FailedToLoadData: Failed To Load Data
+SearchFailed: Search Failed
+UnExpectedError: Un Expected Error
+PleaseCompleteTheRequiredFields: Please Complete The Required Fields
+FailedToUpdateActiveState: Failed To Update Active State
+Brand: Brand
+UpdateFailed: Update Failed
+CreationFailed: Creation Failed
+DeleteFailed: Delete Failed
+UnexpectedErrorOccurred: Unexpected Error Occurred
+TryAgain: Try Again
+CreatedSuccessfully: Created Successfully
+UpdatedSuccessfully: Updated Successfully
+DeletedSuccessfully: Deleted Successfully
+NotFound: Not Found
+IsRequired: Is Required
+AlreadyExists: Already Exists
+ErrorIn: "Error In"
+FailedTo: "Failed To"
+Warning: Warning
+DoYouWantToDeleteThisItem: Do You Want To Delete This Item
+Yes: Yes
+SuperAdminDashboard: Super Admin Dashboard
+OverviewRegisterCompaniesAndStats: Overview of all registered companies and system stats.
+LoadingDashboardData: Loading dashboard data...
+FailedToLoadDashboard: Failed to load dashboard
+TotalCompanies: Total Companies
+TotalUsers: Total Users
+TotalAdmins: Total Admins
+ManageCompanies: Manage Companies
+NoCompaniesFound: No companies found matching your search.
+ViewDetails: View Details
+AddUser: Add User
+SearchCompanyPlaceholder: Search Company Name or Code...
+CompanyNotFound: Company not found.
+BackToDashboard: Back to Dashboard
+RegisteredUsers: Registered Users
+UserName: User Name
+FullName: Full Name
+Email: Email
+Roles: Roles
+Actions: Actions
+DebugCompanies: "Debug: Companies"
+ID: ID
+CreateNewCompany: Create New Company
+CreateAdmin: Create Admin
+WelcomeToOneERP: Welcome to OneERP
+EnterCompanyCodeToContinue: Please enter your Company Code to continue.
+Checking: Checking...
+Continue: Continue
+CompanyCode: Company Code
+Login: Login
+Administration: Administration
+ManageUsers: Manage Users
+CompanyAdmin: Company Admin
+TargetCompanyID: Target Company ID
+Role: Role
+Username: Username
+Password: Password
+FirstName: First Name
+LastName: Last Name
+ConfirmPassword: Confirm Password
+SuperAdminEmail: Super Admin Email
+OTPHelperText: We'll send a 6-digit OTP code (valid for 10 minutes).
+EnterOTP: Enter OTP
+SearchUserPlaceholder: Search by name or email...
+FilterByCompany: Filter by Company
+EditComingSoon: Edit (Coming Soon)
+DisableUser: Disable User
+EnableUser: Enable User
+Stocks: Stocks
+UsersManagement: Users Management
+ManageUsersDescription: Manage users, roles, and access.
+LoadingUsers: Loading users...
+FailedToLoadUsers: Failed to load users
+Retry: Retry
+AllCompanies: All Companies
+NoUsersFound: No users found.
+UserStatusUpdatedSuccessfully: User status updated successfully!
+FailedToUpdateStatus: Failed to update status
+SwitchToEnglish: Switch to English
+SwitchToArabic: Switch to Arabic
+LoggedOutSuccessfully: Logged Out Successfully
+SuperAdminLogin: Super Admin Login
+SearchUsersPlaceholder: Search by name or email...
+CheckingSession: Checking session...
+EnterEmailForOtp: Enter Email for OTP
+SendingOTP: Sending OTP...
+SendOTP: Send OTP
+OtpSentTo: OTP sent to {email}
+UseDifferentEmail: Use a different email
+Verifying: Verifying...
+VerifyAndLogin: Verify & Login
+BackToOnboarding: Back to Onboarding
+PleaseEnterEmail: Please enter email
+OtpSentSuccessfully: OTP sent successfully
+PleaseEnterOtp: Please enter OTP
+LoginSuccessfulRedirecting: Login successful, redirecting...
+Admins: Admins
+RegisterNewUser: Register New User
+CreateNewUserDescription: Create a new user account.
+Registering: Registering...
+CreateUser: Create User
+ErrorCouldNotDetermineCompanyContext: "Error: Could not determine company context."
+CompanyIdIsRequired: Company ID is required.
+RegistrationFailed: Registration Failed
+UserCreatedSuccessfully: User created successfully!
+SetupAdminAccount: Setup Admin Account
+RegisterFirstAdminDescription: Register the first admin for the company.
+PasswordsDoNotMatch: Passwords do not match
+AdminCreatedSuccessfullyPleaseLogin: Admin created successfully. Please login.
+Warehouses: Warehouses
+LoggingInto: Logging into
+ChangeCompany: Change Company
+UserLoggedInSuccessfully: User logged in successfully
+LoginAsSuperAdmin: Login as Super Admin
+PleaseEnterCompanyCode: Please enter Company Code
+CreatedOn: Created On
+DisableCompany: Disable Company
+EnableCompany: Enable Company
+ConfirmAction: Confirm Action
+ConfirmEnableCompany: Are you sure you want to enable this company?
+ConfirmDisableCompany: Are you sure you want to disable this company?
+CompanyEnabledSuccessfully: Company enabled successfully!
+CompanyDisabledSuccessfully: Company disabled successfully!
+FailedToUpdateCompanyStatus: Failed to update company status
+EnterNameAndCode: Enter Name and Code
+RegisterUser: Register User

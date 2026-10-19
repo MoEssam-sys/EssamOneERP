@@ -1,0 +1,87 @@
+@page "/onboarding"
+@using One.Shared.Services
+@using One.Domain.DTOs.Identity
+@using One.Domain.Base
+@using One.Shared.Services.Platform
+@inject NavigationManager _nav
+@inject HttpClient _http
+@inject MessagesCenter _msg
+@inject IKeysAccessor trgma
+@inject IClientStorage _clientStorage
+
+<MudGrid Class="d-flex justify-center align-center" Style="height: 100vh;">
+    <MudItem xs="12" sm="8" md="4">
+        <MudCard Elevation="4" Class="pa-4">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h5" Align="Align.Center">@trgma.WelcomeToOneERP</MudText>
+                    <MudText Typo="Typo.body2" Align="Align.Center">@trgma.EnterCompanyCodeToContinue</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudTextField @bind-Value="CompanyCode" Label="@trgma.CompanyCode" Variant="Variant.Outlined" Margin="Margin.Dense" Class="mb-3" />
+            </MudCardContent>
+            <MudCardActions Class="d-flex justify-center">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="ValidateCompany" Disabled="_loading">
+                    @if (_loading)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                        <MudText Class="ms-2">@trgma.Checking</MudText>
+                    }
+                    else
+                    {
+                        <MudText>@trgma.Continue</MudText>
+                    }
+                </MudButton>
+            </MudCardActions>
+
+            <MudDivider Class="my-3" />
+
+            <!-- Super Admin Login Link -->
+            <MudCardActions Class="d-flex justify-center">
+                <MudLink Typo="Typo.body2" Href="/superadmin-login" Color="Color.Secondary">
+                    <MudIcon Icon="@Icons.Material.Filled.AdminPanelSettings" Size="Size.Small" Class="me-1" />
+                    @trgma.LoginAsSuperAdmin
+                </MudLink>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private string CompanyCode { get; set; } = "";
+    private bool _loading = false;
+
+    private async Task ValidateCompany()
+    {
+        if (string.IsNullOrWhiteSpace(CompanyCode))
+        {
+            await _msg.PublishErrors(trgma.PleaseEnterCompanyCode);
+            return;
+        }
+
+        var result = await ApiService.ExecuteSimpleApi<Result<CompanyValidationDto>>(
+            http: _http,
+            endpoint: $"api/Authentication/ValidateCompany/{CompanyCode}",
+            data: null,
+            msgCenter: _msg,
+            method: HttpMethod.Get,
+            setIsLoading: v => _loading = v
+        );
+
+        if (result != null && result.Success && result.Data != null)
+        {
+            await _clientStorage.SetAsync("company_code", CompanyCode);
+            await _clientStorage.SetAsync("company_name", result.Data.Name);
+
+            if (result.Data.RequiresAdminRegistration)
+            {
+                _nav.NavigateTo($"/register-admin/{result.Data.CompanyId}");
+            }
+            else
+            {
+                _nav.NavigateTo("/login");
+            }
+        }
+    }
+}

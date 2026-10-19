@@ -1,0 +1,216 @@
+﻿Welcome: "مرحباً، {username}!"
+RegisteredSuccessfully: ترجم بنجاح
+Save: حِفظ
+Update: تحديث
+Delete: حذف
+Clear: مسح
+Navigation: التنقل
+Dashboard: لوحة التحكم
+Servers: الخوادم
+Sales: المبيعات
+Purchases: المشتريات
+Warehouse: المستودع
+HR: الموارد البشرية
+Accounting: المحاسبة
+Settings: الإعدادات
+About: حول
+Orders: الطلبات
+Invoices: الفواتير
+Customers: العملاء
+Returns: المرتجعات
+PurchaseOrders: طلبات الشراء
+Vendors: الموردون
+Bills: الفواتير
+Items: العناصر
+Stock: المخزون
+Movements: الحركات
+Adjustments: التعديلات
+Transfers: التحويلات
+Employees: الموظفون
+Attendance: الحضور
+Payroll: الرواتب
+JournalEntries: سجلات اليومية
+ChartOfAccounts: مخطط الحسابات
+Reports: التقارير
+TrialBalance: ميزان المراجعة
+Users: المستخدمون
+Security: الأمان
+Company: الشركة
+Taxes: الضرائب
+Numbering: الترقيم
+PageNotFound: الصفحة غير موجودة
+ChangeStyle: تغيير النمط
+LogOut: تسجيل الخروج
+OpenCloseDrawer: فتح/إغلاق الدرج
+Apply: تطبيق
+SalesDashboard: لوحة تحكم المبيعات
+SalesLast12Weeks: مبيعات آخر 12 أسبوعًا
+RecentInvoices: الفواتير الأخيرة
+Number: رقم
+Customer: العميل
+Date: تاريخ
+Total: المجموع
+Status: الحالة
+TotalSalesMonth: إجمالي المبيعات للشهر
+UnpaidInvoices: الفواتير غير المدفوعة
+OpenOrders: الطلبات المفتوحة
+LowStockAlerts: تنبيهات المخزون المنخفض
+Week: أسبوع
+NewOrder: طلب جديد
+Search: بحث
+Open: فتح
+Closed: مغلق
+Cancelled: ملغى
+DateRange: نطاق التاريخ
+Resource: "المورد، {Status}"
+OrderDetails: تفاصيل الطلب
+Item: العنصر
+Qty: الكمية
+Price: السعر
+Paid: مدفوع
+Unpaid: غير مدفوع
+Loading: جار التحميل
+InvoiceDetails: تفاصيل الفاتورة
+Notes: ملاحظات
+InvoiceLines: خطوط الفاتورة
+Invoice: فاتورة
+Brands: العلامات التجارية
+Branches: الفروع
+Details: تفاصيل
+Code: كود
+Name: الاسم
+Active: نشط
+Inactive: غير نشط
+Create: إنشاء
+Saving: حِفظ
+Cancel: إلغاء
+BrandsList: قائمة العلامات التجارية
+SearchByCodeOrName: بحث بالكود أو الاسم
+FailedToLoadData: فشل في تحميل البيانات
+SearchFailed: فشل في البحث
+UnExpectedError: خطأ غير متوقع
+PleaseCompleteTheRequiredFields: يرجى إكمال الحقول المطلوبة
+FailedToUpdateActiveState: فشل في تحديث حالة النشاط
+Brand: العلامة التجارية
+UpdateFailed: فشل في التحديث
+CreationFailed: فشل في الإنشاء
+DeleteFailed: فشل في الحذف
+UnexpectedErrorOccurred: حدث خطأ غير متوقع
+TryAgain: حاول مرة أخرى
+CreatedSuccessfully: تم الإنشاء بنجاح
+UpdatedSuccessfully: تم التحديث بنجاح
+DeletedSuccessfully: تم الحذف بنجاح
+NotFound: غير موجود
+IsRequired: مطلوب
+AlreadyExists: موجود بالفعل
+ErrorIn: خطأ في
+FailedTo: فشل في
+Warning: تحذير
+DoYouWantToDeleteThisItem: هل تريد حذف هذا العنصر
+Yes: نعم
+SuperAdminDashboard: لوحة تحكم المشرف العام
+OverviewRegisterCompaniesAndStats: نظرة عامة على الشركات المسجلة وإحصائيات النظام.
+LoadingDashboardData: جار تحميل بيانات لوحة التحكم...
+FailedToLoadDashboard: فشل في تحميل لوحة التحكم
+TotalCompanies: إجمالي الشركات
+TotalUsers: إجمالي المستخدمين
+TotalAdmins: إجمالي المشرفين
+ManageCompanies: إدارة الشركات
+NoCompaniesFound: لم يتم العثور على شركات تطابق بحثك.
+ViewDetails: عرض التفاصيل
+AddUser: إضافة مستخدم
+SearchCompanyPlaceholder: ابحث باسم الشركة أو الرمز...
+CompanyNotFound: الشركة غير موجودة.
+BackToDashboard: العودة للوحة التحكم
+RegisteredUsers: المستخدمين المسجلين
+UserName: اسم المستخدم
+FullName: الاسم الكامل
+Email: البريد الإلكتروني
+Roles: الأدوار
+Actions: إجراءات
+DebugCompanies: "تصحيح: الشركات"
+ID: المعرف
+CreateNewCompany: إنشاء شركة جديدة
+CreateAdmin: إنشاء مشرف
+WelcomeToOneERP: مرحباً بك في OneERP
+EnterCompanyCodeToContinue: الرجاء إدخال رمز الشركة للمتابعة.
+Checking: جار التحقق...
+Continue: متابعة
+CompanyCode: رمز الشركة
+Login: تسجيل الدخول
+Administration: الإدارة
+ManageUsers: إدارة المستخدمين
+CompanyAdmin: مشرف الشركة
+TargetCompanyID: معرف الشركة المستهدفة
+Role: الدور
+Username: اسم المستخدم
+Password: كلمة المرور
+FirstName: الاسم الأول
+LastName: الاسم الأخير
+ConfirmPassword: تأكيد كلمة المرور
+SuperAdminEmail: بريد المشرف العام
+OTPHelperText: سنرسل رمز تحقق مكون من 6 أرقام (صالح لمدة 10 دقائق).
+EnterOTP: أدخل رمز التحقق
+SearchUserPlaceholder: ابحث بالاسم أو البريد الإلكتروني...
+FilterByCompany: تصفية حسب الشركة
+EditComingSoon: تعديل (قريباً)
+DisableUser: تعطيل المستخدم
+EnableUser: تفعيل المستخدم
+Stocks: المخزون
+UsersManagement: إدارة المُستخدمين
+ManageUsersDescription: إدارة المستخدمين والأدوار والصلاحيات.
+LoadingUsers: جاري تحميل المستخدمين...
+FailedToLoadUsers: فشل تحميل المستخدمين
+Retry: إعادة المحاولة
+AllCompanies: جميع الشركات
+NoUsersFound: لم يتم العثور على مستخدمين.
+UserStatusUpdatedSuccessfully: تم تحديث حالة المستخدم بنجاح!
+FailedToUpdateStatus: فشل تحديث الحالة
+SwitchToEnglish: التغيير إلى الإنجليزية
+SwitchToArabic: التغيير إلى العربية
+LoggedOutSuccessfully: تم تسجيل الخروج بنجاح
+SuperAdminLogin: تسجيل دخول المشرف العام
+SearchUsersPlaceholder: ابحث بالاسم أو البريد الإلكتروني...
+CheckingSession: جاري التحقق من الجلسة...
+EnterEmailForOtp: أدخل البريد الإلكتروني لرمز التحقق
+SendingOTP: جاري إرسال الرمز...
+SendOTP: إرسال الرمز
+OtpSentTo: تم إرسال الرمز إلى {email}
+UseDifferentEmail: استخدام بريد إلكتروني مختلف
+Verifying: جاري التحقق...
+VerifyAndLogin: تحقق وتسجيل الدخول
+BackToOnboarding: العودة للبداية
+PleaseEnterEmail: الرجاء إدخال البريد الإلكتروني
+OtpSentSuccessfully: تم إرسال الرمز بنجاح
+PleaseEnterOtp: الرجاء إدخال الرمز
+LoginSuccessfulRedirecting: تم الدخول بنجاح، جاري التحويل...
+Admins: المشرفون
+RegisterNewUser: تسجيل مستخدم جديد
+CreateNewUserDescription: إنشاء حساب مستخدم جديد.
+Registering: جاري التسجيل...
+CreateUser: إنشاء مستخدم
+ErrorCouldNotDetermineCompanyContext: "خطأ: تعذر تحديد سياق الشركة."
+CompanyIdIsRequired: معرف الشركة مطلوب.
+RegistrationFailed: فشل التسجيل
+UserCreatedSuccessfully: تم إنشاء المستخدم بنجاح!
+SetupAdminAccount: إعداد حساب المشرف
+RegisterFirstAdminDescription: تسجيل المشرف الأول للشركة.
+PasswordsDoNotMatch: كلمات المرور غير متطابقة
+AdminCreatedSuccessfullyPleaseLogin: تم إنشاء المشرف بنجاح. الرجاء تسجيل الدخول.
+Warehouses: المستودعات
+LoggingInto: جاري الدخول إلى
+ChangeCompany: تغيير الشركة
+UserLoggedInSuccessfully: تم تسجيل دخول المستخدم بنجاح
+LoginAsSuperAdmin: تسجيل الدخول كمشرف عام
+PleaseEnterCompanyCode: الرجاء إدخال رمز الشركة
+CreatedOn: تم الإنشاء في
+DisableCompany: تعطيل الشركة
+EnableCompany: تفعيل الشركة
+ConfirmAction: تأكيد الإجراء
+ConfirmEnableCompany: هل أنت متأكد أنك تريد تفعيل هذه الشركة؟
+ConfirmDisableCompany: هل أنت متأكد أنك تريد تعطيل هذه الشركة؟
+CompanyEnabledSuccessfully: تم تفعيل الشركة بنجاح!
+CompanyDisabledSuccessfully: تم تعطيل الشركة بنجاح!
+FailedToUpdateCompanyStatus: فشل تحديث حالة الشركة
+EnterNameAndCode: أدخل الاسم والرمز
+RegisterUser: تسجيل مستخدم

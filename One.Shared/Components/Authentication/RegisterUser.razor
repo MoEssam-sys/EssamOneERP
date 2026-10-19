@@ -1,0 +1,151 @@
+@page "/register-user"
+@page "/register-user/{CompanyIdParam}"
+@using One.Shared.Services
+@using One.Shared.Services.Extenstions
+@using One.Domain.DTOs.Identity
+@using One.Domain.Base
+@inject NavigationManager _nav
+@inject HttpClient _http
+@inject MessagesCenter _msg
+@inject AuthenticationService _auth
+@inject IKeysAccessor trgma
+
+<MudGrid Class="d-flex justify-center align-center" Style="height: 100vh;">
+    <MudItem xs="12" sm="8" md="5">
+        <MudCard Elevation="4" Class="pa-4">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h5" Align="Align.Center">@trgma.RegisterNewUser</MudText>
+                    <MudText Typo="Typo.body2" Align="Align.Center">@trgma.CreateNewUserDescription</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudForm @ref="_form">
+                    @if (_isSuperAdmin)
+                    {
+                        <MudNumericField T="int?" @bind-Value="_targetCompanyId" Label="@trgma.TargetCompanyID" Variant="Variant.Outlined" Margin="Margin.Dense" Required="true" Min="1" />
+                    }
+
+                    <MudSelect T="string" Label="@trgma.Role" @bind-Value="_selectedRole" Variant="Variant.Outlined" Margin="Margin.Dense" AnchorOrigin="Origin.BottomCenter" Class="mb-3">
+                        @foreach (var r in _availableRoles)
+                        {
+                             <MudSelectItem Value="@r">@r</MudSelectItem>
+                        }
+                    </MudSelect>
+
+                    <MudTextField @bind-Value="Dto.UserName" Label="@trgma.Username" Variant="Variant.Outlined" Margin="Margin.Dense" Required="true" />
+                    <MudTextField @bind-Value="Dto.Password" Label="@trgma.Password" Variant="Variant.Outlined" Margin="Margin.Dense" Required="true" InputType="InputType.Password" />
+
+                    <MudStack Row="true" Spacing="2">
+                        <MudTextField @bind-Value="Dto.FirstName" Label="@trgma.FirstName" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                        <MudTextField @bind-Value="Dto.LastName" Label="@trgma.LastName" Variant="Variant.Outlined" Margin="Margin.Dense" />
+                    </MudStack>
+                </MudForm>
+            </MudCardContent>
+            <MudCardActions Class="d-flex justify-center">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="Register" Disabled="_loading">
+                     @if (_loading)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                        <MudText Class="ms-2">@trgma.Registering</MudText>
+                    }
+                    else
+                    {
+                        <MudText>@trgma.CreateUser</MudText>
+                    }
+                </MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    [Parameter] public string? CompanyIdParam { get; set; }
+
+    private RegisterUserDto Dto { get; set; } = new();
+    private bool _loading = false;
+    private MudForm _form = null!;
+    private int? _targetCompanyId;
+    private string _selectedRole = "User";
+    private List<string> _availableRoles = new();
+    private bool _isSuperAdmin = false;
+
+    protected override void OnInitialized()
+    {
+        var role = _auth.GetClaim("role");
+        _isSuperAdmin = role?.Contains("SuperAdmin") ?? false;
+
+        // Roles setup
+        if (_isSuperAdmin)
+        {
+            _availableRoles = new List<string> { "CompanyAdmin", "User", "Tester" };
+            _selectedRole = "CompanyAdmin";
+        }
+        else
+        {
+            // CompanyAdmin can only create User role
+            _availableRoles = new List<string> { "User" };
+            _selectedRole = "User";
+        }
+
+        // Company Context
+        if (_isSuperAdmin)
+        {
+            // If passed via URL
+            if (!string.IsNullOrEmpty(CompanyIdParam) && int.TryParse(CompanyIdParam, out int parsedId))
+            {
+                _targetCompanyId = parsedId;
+            }
+        }
+        else
+        {
+            var cid = _auth.GetClaim("companyId");
+            if (int.TryParse(cid, out int id))
+            {
+                _targetCompanyId = id;
+            }
+            else
+            {
+                _msg.PublishErrors(trgma.ErrorCouldNotDetermineCompanyContext);
+                _nav.NavigateTo("/");
+            }
+        }
+    }
+
+    private async Task Register()
+    {
+        await _form.Validate();
+        if (!_form.IsValid) return;
+
+        if (_targetCompanyId == null)
+        {
+             await _msg.PublishErrors(trgma.CompanyIdIsRequired);
+             return;
+        }
+
+        Dto.CompanyId = _targetCompanyId;
+        Dto.Age = 25; // Default
+
+        _loading = true;
+        try
+        {
+            var res = await _http.PostResultAsync<object, RegisterUserDto>(
+                $"api/Authentication/Register?role={_selectedRole}",
+                Dto,
+                onError: trgma.RegistrationFailed,
+                ui: _msg
+            );
+
+            if (res.Success)
+            {
+                await _msg.NotifySuccess(trgma.UserCreatedSuccessfully);
+                Dto = new(); // Reset
+                StateHasChanged();
+            }
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+}
