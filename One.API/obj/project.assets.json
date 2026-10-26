@@ -3676,11 +3676,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\OldOneERP\\One.API\\One.API.csproj",
+      "projectUniqueName": "D:\\EssamOneERP\\One.API\\One.API.csproj",
       "projectName": "One.API",
-      "projectPath": "D:\\OldOneERP\\One.API\\One.API.csproj",
+      "projectPath": "D:\\EssamOneERP\\One.API\\One.API.csproj",
       "packagesPath": "C:\\Users\\Mohammed Essam\\.nuget\\packages\\",
-      "outputPath": "D:\\OldOneERP\\One.API\\obj\\",
+      "outputPath": "D:\\EssamOneERP\\One.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3704,14 +3704,14 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\OldOneERP\\One.Application\\One.Application.csproj": {
-              "projectPath": "D:\\OldOneERP\\One.Application\\One.Application.csproj"
+            "D:\\EssamOneERP\\One.Application\\One.Application.csproj": {
+              "projectPath": "D:\\EssamOneERP\\One.Application\\One.Application.csproj"
             },
-            "D:\\OldOneERP\\One.Domain\\One.Domain.csproj": {
-              "projectPath": "D:\\OldOneERP\\One.Domain\\One.Domain.csproj"
+            "D:\\EssamOneERP\\One.Domain\\One.Domain.csproj": {
+              "projectPath": "D:\\EssamOneERP\\One.Domain\\One.Domain.csproj"
             },
-            "D:\\OldOneERP\\One.Infrastructure\\One.Infrastructure.csproj": {
-              "projectPath": "D:\\OldOneERP\\One.Infrastructure\\One.Infrastructure.csproj"
+            "D:\\EssamOneERP\\One.Infrastructure\\One.Infrastructure.csproj": {
+              "projectPath": "D:\\EssamOneERP\\One.Infrastructure\\One.Infrastructure.csproj"
             }
           }
         }

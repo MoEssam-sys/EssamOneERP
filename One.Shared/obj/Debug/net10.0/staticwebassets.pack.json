@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\EssamOneERP\\One.Shared\\obj\\Debug\\net10.0\\scopedcss\\projectbundle\\One.Shared.bundle.scp.css",
+      "PackagePath": "staticwebassets\\One.Shared.jadpgi5lvv.bundle.scp.css"
+    },
+    {
+      "Id": "D:\\EssamOneERP\\One.Shared\\wwwroot\\js\\JsInterop.js",
+      "PackagePath": "staticwebassets\\js\\JsInterop.js"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.One.Shared.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.One.Shared.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.build.One.Shared.props",
+      "PackagePath": "build\\One.Shared.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.buildMultiTargeting.One.Shared.props",
+      "PackagePath": "buildMultiTargeting\\One.Shared.props"
+    },
+    {
+      "Id": "obj\\Debug\\net10.0\\staticwebassets\\msbuild.buildTransitive.One.Shared.props",
+      "PackagePath": "buildTransitive\\One.Shared.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

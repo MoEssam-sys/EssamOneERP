@@ -1,0 +1,2 @@
+D:\EssamOneERP\One.Shared\wwwroot\js\JsInterop.js
+wwwroot\js\JsInterop.js

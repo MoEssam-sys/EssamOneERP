@@ -1,0 +1,159 @@
+is_global = true
+build_property.MudDebugAnalyzer = 
+build_property.MudAllowedAttributePattern = 
+build_property.MudAllowedAttributeList = 
+build_property.TargetFramework = net10.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
+build_property._SupportedPlatformList = Linux,macOS,Windows,browser
+build_property.RootNamespace = One.Shared
+build_property.RootNamespace = One.Shared
+build_property.ProjectDir = D:\EssamOneERP\One.Shared\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 10.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\EssamOneERP\One.Shared
+build_property._RazorSourceGeneratorDebug = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
+
+[D:/EssamOneERP/One.Shared/Resources/ar.yml]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Resources/en-US.yml]
+build_metadata.AdditionalFiles.TargetPath = 
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Admin/UsersManagement.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblxVc2Vyc01hbmFnZW1lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Authentication/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBdXRoZW50aWNhdGlvblxMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Authentication/RegisterAdmin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBdXRoZW50aWNhdGlvblxSZWdpc3RlckFkbWluLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Authentication/RegisterUser.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBdXRoZW50aWNhdGlvblxSZWdpc3RlclVzZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Authentication/SuperAdminLogin.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBdXRoZW50aWNhdGlvblxTdXBlckFkbWluTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/LocalizeScope.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMb2NhbGl6ZVNjb3BlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Onboarding/CompanyOnboarding.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xPbmJvYXJkaW5nXENvbXBhbnlPbmJvYXJkaW5nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Pages/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Routes.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Sales/Branches/BranchesMaster.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTYWxlc1xCcmFuY2hlc1xCcmFuY2hlc01hc3Rlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Sales/Brands/BrandsMaster.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTYWxlc1xCcmFuZHNcQnJhbmRzTWFzdGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Sales/Orders.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTYWxlc1xPcmRlcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Sales/SalesDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTYWxlc1xTYWxlc0Rhc2hib2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Stocks/WarehousesMaster.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTdG9ja3NcV2FyZWhvdXNlc01hc3Rlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/SysAdmin/CompaniesList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTeXNBZG1pblxDb21wYW5pZXNMaXN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/SysAdmin/CompanyDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTeXNBZG1pblxDb21wYW55RGV0YWlscy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/SysAdmin/SuperAdminDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTeXNBZG1pblxTdXBlckFkbWluRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/OneComponents/DevErrorDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xEZXZFcnJvckRpYWxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/OneComponents/OneBreadcrumbs.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xPbmVCcmVhZGNydW1icy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/OneComponents/OneButtonsBar.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xPbmVCdXR0b25zQmFyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/OneComponents/OneFilterBar.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xPbmVGaWx0ZXJCYXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/OneComponents/OneGenericDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xPbmVHZW5lcmljRGlhbG9nLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/OneComponents/OneLoadingBtn.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xPbmVMb2FkaW5nQnRuLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/OneComponents/OnePageHeader.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xPbmVQYWdlSGVhZGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/OneComponents/Stamp/OneStamps.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xTdGFtcFxPbmVTdGFtcHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/EssamOneERP/One.Shared/Components/Layout/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-v1p6esiaop
+
+[D:/EssamOneERP/One.Shared/Components/Layout/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-nnfuo93k0l
+
+[D:/EssamOneERP/One.Shared/Components/Sales/Invoices.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTYWxlc1xJbnZvaWNlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-rfmqh75sbn
+
+[D:/EssamOneERP/One.Shared/OneComponents/OneLoader.razor]
+build_metadata.AdditionalFiles.TargetPath = T25lQ29tcG9uZW50c1xPbmVMb2FkZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-ij9q1oy45w

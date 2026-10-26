@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "d6Zl4zI6raY=",
+  "dgSpecHash": "N6QcXTyUr6Y=",
   "success": true,
-  "projectFilePath": "D:\\OldOneERP\\One.Domain\\One.Domain.csproj",
+  "projectFilePath": "D:\\EssamOneERP\\One.Domain\\One.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.authorization\\10.0.10\\microsoft.aspnetcore.authorization.10.0.10.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.aspnetcore.components\\10.0.10\\microsoft.aspnetcore.components.10.0.10.nupkg.sha512",

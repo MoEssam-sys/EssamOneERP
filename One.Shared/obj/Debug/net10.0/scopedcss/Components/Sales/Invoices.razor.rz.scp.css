@@ -1,0 +1,26 @@
+.top-panes[b-rfmqh75sbn] {
+    height: 75vh;
+}
+
+.pane[b-rfmqh75sbn] {
+    min-width: 0;
+}
+
+.pane-card[b-rfmqh75sbn] {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.pane-scroll[b-rfmqh75sbn] {
+    flex: 1 1 auto;
+    overflow: auto;
+}
+
+.fw-bold[b-rfmqh75sbn] {
+    font-weight: 600;
+}
+
+.text-end[b-rfmqh75sbn] {
+    text-align: end;
+}

@@ -1,0 +1,28 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/One.Shared/js/JsInterop.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\JsInterop.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-5IlwOSj6mH2d4OGKQs\u002BGm4g8H\u002BRAwkSpAcNDkevggHo="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"247"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00225IlwOSj6mH2d4OGKQs\u002BGm4g8H\u002BRAwkSpAcNDkevggHo=\u0022"},{"Name":"Last-Modified","Value":"Mon, 19 Oct 2026 04:41:14 GMT"},{"Name":"Vary","Value":"Accept-Encoding"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/One.Shared/js/JsInterop.oxyl6vz0d8.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\JsInterop.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"oxyl6vz0d8"},{"Name":"integrity","Value":"sha256-5IlwOSj6mH2d4OGKQs\u002BGm4g8H\u002BRAwkSpAcNDkevggHo="},{"Name":"label","Value":"_content/One.Shared/js/JsInterop.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"247"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00225IlwOSj6mH2d4OGKQs\u002BGm4g8H\u002BRAwkSpAcNDkevggHo=\u0022"},{"Name":"Last-Modified","Value":"Mon, 19 Oct 2026 04:41:14 GMT"},{"Name":"Vary","Value":"Accept-Encoding"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/One.Shared/One.Shared.bundle.scp.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\One.Shared.jadpgi5lvv.bundle.scp.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-dchiMbl/KYy6GCafM5kFSWkG5r4VP/g5TE4TOofDIYU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"41248"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022dchiMbl/KYy6GCafM5kFSWkG5r4VP/g5TE4TOofDIYU=\u0022"},{"Name":"Last-Modified","Value":"Mon, 19 Oct 2026 04:42:07 GMT"},{"Name":"Vary","Value":"Accept-Encoding"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/One.Shared/One.Shared.jadpgi5lvv.bundle.scp.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\One.Shared.jadpgi5lvv.bundle.scp.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"jadpgi5lvv"},{"Name":"integrity","Value":"sha256-dchiMbl/KYy6GCafM5kFSWkG5r4VP/g5TE4TOofDIYU="},{"Name":"label","Value":"_content/One.Shared/One.Shared.bundle.scp.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"41248"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022dchiMbl/KYy6GCafM5kFSWkG5r4VP/g5TE4TOofDIYU=\u0022"},{"Name":"Last-Modified","Value":"Mon, 19 Oct 2026 04:42:07 GMT"},{"Name":"Vary","Value":"Accept-Encoding"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>
