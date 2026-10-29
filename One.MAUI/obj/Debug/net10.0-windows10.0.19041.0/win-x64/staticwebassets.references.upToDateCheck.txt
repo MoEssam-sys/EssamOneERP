@@ -6,3 +6,4 @@ D:\EssamOneERP\One.Shared\obj\Debug\net10.0\staticwebassets.build.json
 D:\EssamOneERP\One.Shared\obj\Debug\net10.0\staticwebassets.build.json
 D:\EssamOneERP\One.Shared\obj\Debug\net10.0\staticwebassets.build.json
 D:\EssamOneERP\One.Shared\obj\Debug\net10.0\staticwebassets.build.json
+D:\EssamOneERP\One.Shared\obj\Debug\net10.0\staticwebassets.build.json
