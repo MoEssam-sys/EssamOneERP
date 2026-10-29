@@ -1,0 +1,16 @@
+{
+  "BusinessTables": [
+    "Branches", "Brands", "Warehouses", "Suppliers", "Customers", "Products",
+    "ProductUnits", "Categories", "Units", "SalesInvoices", "SalesInvoiceDetails"
+  ],
+  "IdentityTables": [
+    "AspNetUsers", "AspNetRoles", "AspNetUserRoles", "AspNetUserClaims",
+    "AspNetUserLogins", "AspNetUserTokens", "AspNetRoleClaims",
+    "Companies", "OtpChallenges", "AppLogs", "__EFMigrationsHistory"
+  ],
+  "ExampleTables": ["TestCustomers", "TestOrders"],
+  "DeclaredProcedures": [
+    "Brand_Insert", "Brand_Update", "Brand_Delete", "Brand_Active", "Brand_GetById", "Brand_GetAll",
+    "Test_Insert", "Test_Update", "Test_Delete", "Test_Active", "Test_GetById", "Test_GetAll"
+  ]
+}

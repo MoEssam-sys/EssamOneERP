@@ -111,3 +111,11 @@ OneERP is a multi-tenant ERP solution using .NET 8 (API) and MAUI (Blazor Hybrid
     -   `One.Shared\Services\ApiService.cs`
     -   `One.Domain\DTOs\Identity\RegisterUserDto.cs`
 
+## Database transfer preparation — 2026-10-29
+
+- Added `Database/Transfer/` for selective schema/data/procedure export from `db37048` and `db36442` to new local databases, following the user's explicit scope of code-listed objects only.
+- Audited 11 business tables, 10 Identity/company/logging tables, EF migration history, and 12 procedure-name constants. Procedure constants have no runtime call sites; test examples are excluded from export by default.
+- Added a read-only inventory query and a Microsoft SMO export utility that emits local SQL and an object/row-count report. Source credentials are prompted interactively; imports refuse an existing database and require the specified local server.
+- Build, inventory matching, CLI guards and T-SQL parser checks passed. Actual online export/local import remains unverified; see `Database/Transfer/VALIDATION.md`.
+- Application code, existing database schemas/data, and environment configuration were not changed.
+
