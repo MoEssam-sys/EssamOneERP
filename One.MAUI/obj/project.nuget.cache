@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "z6/bZs6zOhE=",
+  "dgSpecHash": "jmpEIddEv4U=",
   "success": true,
   "projectFilePath": "D:\\EssamOneERP\\One.MAUI\\One.MAUI.ERP.csproj",
   "expectedPackageFiles": [
@@ -84,7 +84,7 @@
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.maui.graphics\\10.0.20\\microsoft.maui.graphics.10.0.20.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.maui.graphics.win2d.winui.desktop\\10.0.20\\microsoft.maui.graphics.win2d.winui.desktop.10.0.20.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.maui.resizetizer\\10.0.20\\microsoft.maui.resizetizer.10.0.20.nupkg.sha512",
-    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.13\\microsoft.net.illink.tasks.10.0.13.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.14\\microsoft.net.illink.tasks.10.0.14.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.web.webview2\\1.0.3179.45\\microsoft.web.webview2.1.0.3179.45.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.windows.sdk.buildtools\\10.0.22621.756\\microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.windowsappsdk\\1.7.250909003\\microsoft.windowsappsdk.1.7.250909003.nupkg.sha512",
@@ -189,6 +189,10 @@
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\xamarin.kotlinx.serialization.core\\1.9.0.1\\xamarin.kotlinx.serialization.core.1.9.0.1.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\xamarin.kotlinx.serialization.core.jvm\\1.9.0.1\\xamarin.kotlinx.serialization.core.jvm.1.9.0.1.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\yamldotnet\\9.1.0\\yamldotnet.9.1.0.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.android-x64\\10.0.14\\microsoft.netcore.app.runtime.mono.android-x64.10.0.14.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.android-arm64\\10.0.14\\microsoft.netcore.app.runtime.mono.android-arm64.10.0.14.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.iossimulator-x64\\10.0.14\\microsoft.netcore.app.runtime.mono.iossimulator-x64.10.0.14.nupkg.sha512",
+    "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.maccatalyst-x64\\10.0.14\\microsoft.netcore.app.runtime.mono.maccatalyst-x64.10.0.14.nupkg.sha512",
     "C:\\Users\\Mohammed Essam\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512"
   ],
   "logs": [
