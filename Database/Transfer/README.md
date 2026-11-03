@@ -68,6 +68,8 @@ Test-NetConnection db37048.public.databaseasp.net -Port 1433
 
 إذا كانت `TcpTestSucceeded` تساوي `False` فراجع Firewall أو سماح عنوان IP في لوحة الاستضافة. إذا كانت `True`، جرّب نفس السيرفر وSQL username وقاعدة البيانات مباشرة في SSMS لمراجعة بيانات الدخول وصلاحية الاتصال. استخدم في `-LocalServer` القيمة الدقيقة من `00_Local_Server.sql`؛ كلمة `Local` أو alias الاتصال قد لا تساوي اسم السيرفر الفعلي، وسيوقف سكربت الاستيراد لاحقًا لحماية قاعدة أخرى.
 
+لو ظهر خطأ `ExecuteScalar requires an open and available Connection` بعد طباعة أسطر `Schema`، حدّث فرع `development` ثم أعد التصدير. الإصدارات المحدثة تثبّت اتصال SMO أثناء الانتقال من تصدير الـschema إلى عدّ الصفوف والبيانات. المحاولة الفاشلة تحذف ملف `.partial` ولا تنشئ ملف SQL صالحًا للاستيراد.
+
 الناتج داخل `exports`:
 
 - `source1.used.sql` و`source2.used.sql`: إنشاء قاعدتين جديدتين، وإنشاء الجداول ونسخ البيانات والمفاتيح والفهارس والعلاقات وإجراءات `Brand_*` الموجودة وTriggers الجداول المختارة.

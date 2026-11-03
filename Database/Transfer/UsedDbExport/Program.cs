@@ -72,7 +72,8 @@ try
         EncryptConnection = true,
         TrustServerCertificate = false,
         ConnectTimeout = 30,
-        StatementTimeout = 300
+        StatementTimeout = 300,
+        AutoDisconnectMode = AutoDisconnectMode.NoAutoDisconnect
     };
     try
     {
@@ -81,8 +82,20 @@ try
         var server = new Server(connection);
         var database = server.Databases[sourceDatabase]
             ?? throw new InvalidOperationException("Source database not found or not visible to this login.");
-        object? Scalar(string sql) => connection.ExecuteScalar($"USE {Identifier(sourceDatabase)};\n{sql}");
-        System.Data.DataTable Query(string sql) => connection.ExecuteWithResults($"USE {Identifier(sourceDatabase)};\n{sql}").Tables[0];
+        void EnsureConnected()
+        {
+            if (!connection.IsOpen) connection.Connect();
+        }
+        object? Scalar(string sql)
+        {
+            EnsureConnected();
+            return connection.ExecuteScalar($"USE {Identifier(sourceDatabase)};\n{sql}");
+        }
+        System.Data.DataTable Query(string sql)
+        {
+            EnsureConnected();
+            return connection.ExecuteWithResults($"USE {Identifier(sourceDatabase)};\n{sql}").Tables[0];
+        }
         if (Scalar("SELECT HAS_PERMS_BY_NAME(DB_NAME(), 'DATABASE', 'VIEW DEFINITION')")?.ToString() != "1")
             throw new InvalidOperationException("Database VIEW DEFINITION is required. Hidden objects cannot be safely treated as absent.");
 
@@ -176,6 +189,7 @@ try
                 foreach (Table table in tables)
                 {
                     string name = Qualified(table.Schema, table.Name);
+                    Console.WriteLine($"Data: {name} (counting rows...)");
                     long before = Convert.ToInt64(Scalar($"SELECT COUNT_BIG(*) FROM {name};"), CultureInfo.InvariantCulture);
                     Console.WriteLine($"Data: {name} ({before} rows)");
                     foreach (string sql in scripter.EnumScript(new[] { table.Urn })) Batch(sql);
