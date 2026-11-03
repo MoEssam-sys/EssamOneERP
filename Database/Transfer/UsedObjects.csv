@@ -1,0 +1,35 @@
+﻿Kind,Name,ConnectionGroup,UsageEvidence,SourceFile,SourceLine
+Table,Suppliers,MainConnection (Debug) / LiveConnection (Release),Repository + API,One.Domain/Entities/Purchases/Suppliers.cs,6
+Table,Branches,MainConnection (Debug) / LiveConnection (Release),Repository + API,One.Domain/Entities/Sales/Branches.cs,6
+Table,Brands,MainConnection (Debug) / LiveConnection (Release),Repository + API,One.Domain/Entities/Sales/Brands.cs,6
+Table,Customers,MainConnection (Debug) / LiveConnection (Release),Entity + DTO,One.Domain/Entities/Sales/Customers.cs,6
+Table,ProductUnits,MainConnection (Debug) / LiveConnection (Release),Entity + DTO,One.Domain/Entities/Sales/ProductUnits.cs,6
+Table,Products,MainConnection (Debug) / LiveConnection (Release),Entity + DTO,One.Domain/Entities/Sales/Products.cs,6
+Table,SalesInvoiceDetails,MainConnection (Debug) / LiveConnection (Release),Entity + DTO,One.Domain/Entities/Sales/SalesInvoiceDetails.cs,6
+Table,SalesInvoices,MainConnection (Debug) / LiveConnection (Release),Entity + DTO,One.Domain/Entities/Sales/SalesInvoices.cs,6
+Table,Categories,MainConnection (Debug) / LiveConnection (Release),Entity + DTO,One.Domain/Entities/Stocks/Categories.cs,6
+Table,Units,MainConnection (Debug) / LiveConnection (Release),Entity + DTO,One.Domain/Entities/Stocks/Units.cs,6
+Table,Warehouses,MainConnection (Debug) / LiveConnection (Release),Repository + API,One.Domain/Entities/Stocks/Warehouses.cs,6
+Table,AspNetRoles,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,49
+Table,AspNetRoleClaims,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,104
+Table,AspNetUserClaims,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,129
+Table,AspNetUserLogins,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,151
+Table,AspNetUserRoles,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,166
+Table,AspNetUserTokens,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,192
+Table,AppLogs,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,254
+Table,Companies,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,288
+Table,OtpChallenges,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,324
+Table,AspNetUsers,UserConnection,EF Core model,One.Infrastructure/Migrations/UsersDbContextModelSnapshot.cs,408
+Table,__EFMigrationsHistory,UserConnection,EF migration bookkeeping,One.Infrastructure/Migrations/,
+Stored procedure name,Test_Insert,Unproven runtime use,Example constant; excluded by default,One.Application/Base/Procedures.cs,5
+Stored procedure name,Test_Update,Unproven runtime use,Example constant; excluded by default,One.Application/Base/Procedures.cs,6
+Stored procedure name,Test_Delete,Unproven runtime use,Example constant; excluded by default,One.Application/Base/Procedures.cs,7
+Stored procedure name,Test_Active,Unproven runtime use,Example constant; excluded by default,One.Application/Base/Procedures.cs,8
+Stored procedure name,Test_GetById,Unproven runtime use,Example constant; excluded by default,One.Application/Base/Procedures.cs,9
+Stored procedure name,Test_GetAll,Unproven runtime use,Example constant; excluded by default,One.Application/Base/Procedures.cs,10
+Stored procedure name,Brand_Insert,Unproven runtime use,Constant; no call found; exported if present,One.Application/Base/Procedures.cs,13
+Stored procedure name,Brand_Update,Unproven runtime use,Constant; no call found; exported if present,One.Application/Base/Procedures.cs,15
+Stored procedure name,Brand_Delete,Unproven runtime use,Constant; no call found; exported if present,One.Application/Base/Procedures.cs,16
+Stored procedure name,Brand_Active,Unproven runtime use,Constant; no call found; exported if present,One.Application/Base/Procedures.cs,17
+Stored procedure name,Brand_GetById,Unproven runtime use,Constant; no call found; exported if present,One.Application/Base/Procedures.cs,18
+Stored procedure name,Brand_GetAll,Unproven runtime use,Constant; no call found; exported if present,One.Application/Base/Procedures.cs,19

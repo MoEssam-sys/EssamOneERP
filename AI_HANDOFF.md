@@ -111,3 +111,12 @@ OneERP is a multi-tenant ERP solution using .NET 8 (API) and MAUI (Blazor Hybrid
     -   `One.Shared\Services\ApiService.cs`
     -   `One.Domain\DTOs\Identity\RegisterUserDto.cs`
 
+
+
+## Database transfer audit — 2026-11-02
+
+- Audited current source commit `fa9202aa16e57e20e247d31bb7b26692a0329edf`: 11 business table names, 10 Identity/company/log tables plus migration history, and 12 stored-procedure-name constants. Current repositories use direct SQL; no runtime calls to those procedure names or to the procedure parameter helper were found.
+- Added `Database/Transfer/` from the reviewed supplied transfer archive, with Arabic audit, CSV source references, read-only inventory SQL, local SQL Server 2022 discovery/verification scripts, the SMO exporter and a PowerShell two-source wrapper. README explains local connection setup for UserConnection/MainConnection/LiveConnection and recommends preserving the source database separation for the initial copy.
+- Exporter Release build succeeded with no errors; NuGet vulnerability audit service was unreachable (NU1900). CLI input/refusal checks and SQL Server 2022 ScriptDom syntax checks passed. Full evidence and limitations are in `Database/Transfer/VALIDATION.md`.
+- No ONLINE connection, data export or real local SQL import was performed. Source credentials/TCP access are unavailable. Actual source mapping, database contents and the local instance name must be verified on the user's machine. No application configuration or application behavior was changed.
+- Ongoing project branch: `development`, based on the audited main commit. Continue project work on this branch and keep `main` for reviewed integration points.
