@@ -65,15 +65,19 @@ try
     string username = Console.ReadLine()?.Trim() ?? "";
     if (username.Length == 0) throw new ArgumentException("A SQL username is required.");
     using var password = ReadPassword();
+    Console.WriteLine("Connecting to the source SQL Server...");
     var connection = new ServerConnection(sourceServer, username, password)
     {
         DatabaseName = sourceDatabase,
         EncryptConnection = true,
         TrustServerCertificate = false,
-        StatementTimeout = 0
+        ConnectTimeout = 30,
+        StatementTimeout = 300
     };
     try
     {
+        connection.Connect();
+        Console.WriteLine("Connected. Reading database metadata...");
         var server = new Server(connection);
         var database = server.Databases[sourceDatabase]
             ?? throw new InvalidOperationException("Source database not found or not visible to this login.");
