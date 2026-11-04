@@ -173,7 +173,7 @@ try
                 Batch($"IF CONVERT(nvarchar(128), SERVERPROPERTY('ServerName')) <> {Literal(localServer)} THROW 51300, 'Wrong SQL Server instance. Import stopped.', 1;\n"
                     + $"IF CONVERT(int, SERVERPROPERTY('ProductMajorVersion')) < {major.ToString(CultureInfo.InvariantCulture)} THROW 51303, 'Local SQL Server version is older than the export target.', 1;\n"
                     + $"IF DB_ID({Literal(targetDatabase)}) IS NOT NULL THROW 51301, 'Target database already exists. Choose a new target.', 1;\n"
-                    + $"EXEC({Literal($"CREATE DATABASE {Identifier(targetDatabase)} COLLATE {Identifier(database.Collation)};")});");
+                    + $"EXEC({Literal($"CREATE DATABASE {Identifier(targetDatabase)} COLLATE {CollationName(database.Collation)};")});");
                 Batch($"USE {Identifier(targetDatabase)};");
                 Batch("SET XACT_ABORT ON;\nBEGIN TRANSACTION;");
                 foreach (string name in tables.Select(t => t.Schema).Concat(procedures.Select(p => p.Schema)).Distinct().Where(s => s != "dbo"))
@@ -242,6 +242,13 @@ catch (Exception ex)
 static string Identifier(string name) => "[" + name.Replace("]", "]]") + "]";
 static string Literal(string value) => "N'" + value.Replace("'", "''") + "'";
 static string Qualified(string schema, string name) => Identifier(schema) + "." + Identifier(name);
+static string CollationName(string name)
+{
+    if (string.IsNullOrWhiteSpace(name) || name.Length > 128
+        || name.Any(c => !(char.IsAsciiLetterOrDigit(c) || c == '_')))
+        throw new InvalidOperationException($"Unsupported database collation name: {name}");
+    return name;
+}
 static SecureString ReadPassword()
 {
     if (Console.IsInputRedirected) throw new InvalidOperationException("Run interactively so the password is not placed in command history or input files.");

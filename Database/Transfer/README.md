@@ -70,6 +70,8 @@ Test-NetConnection db37048.public.databaseasp.net -Port 1433
 
 لو ظهر خطأ `ExecuteScalar requires an open and available Connection` بعد طباعة أسطر `Schema`، حدّث فرع `development` ثم أعد التصدير. الإصدارات المحدثة تثبّت اتصال SMO أثناء الانتقال من تصدير الـschema إلى عدّ الصفوف والبيانات. المحاولة الفاشلة تحذف ملف `.partial` ولا تنشئ ملف SQL صالحًا للاستيراد.
 
+ملفات SQL المولّدة بإصدار قديم قد تحتوي سطرًا مثل `COLLATE [SQL_Latin1_General_CP1_CI_AS]` وتفشل برسالة `Incorrect syntax near 'SQL_Latin1_General_CP1_CI_AS'`. لا تحتاج إعادة تصدير البيانات: في `source1.used.sql` و`source2.used.sql` احذف القوسين المربعين حول اسم الـcollation فقط ليصبح `COLLATE SQL_Latin1_General_CP1_CI_AS`، ثم أعد التنفيذ. المولّد الحالي يكتب الصياغة الصحيحة ويتحقق من اسم الـcollation.
+
 الناتج داخل `exports`:
 
 - `source1.used.sql` و`source2.used.sql`: إنشاء قاعدتين جديدتين، وإنشاء الجداول ونسخ البيانات والمفاتيح والفهارس والعلاقات وإجراءات `Brand_*` الموجودة وTriggers الجداول المختارة.
