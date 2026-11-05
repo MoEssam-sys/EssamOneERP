@@ -28,10 +28,20 @@
                             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
                         </ChildContent>
 
-                        <ErrorContent>
-                            #if DEBUG
-                            @RenderDevError()
-                            #else
+                        <ErrorContent Context="routeException">
+                            @if (ShowDetailedErrors)
+                            {
+                                <div style="padding:16px;border:1px solid #f00;background:#fff3f3;color:#700;font-family:sans-serif;direction:rtl">
+                                    <div style="font-weight:bold;margin-bottom:8px">حدث خطأ أثناء عرض الصفحة:</div>
+                                    <pre style="direction:ltr;text-align:left;white-space:pre-wrap;overflow-wrap:anywhere">@routeException</pre>
+                                    <button style="margin-top:12px;padding:8px 12px;cursor:pointer;border:1px solid #700;background:#fff;color:#700;border-radius:6px"
+                                            @onclick="@(() => Navigation.NavigateTo(Navigation.Uri, replace: true))">
+                                        إعادة التحميل
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
                             <LayoutView Layout="@typeof(Layout.MainLayout)">
                                 <MudAlert Severity="Severity.Error" Variant="Variant.Filled" Dense="true" Class="mb-3">
                                     @trgma.UnexpectedErrorOccurred
@@ -40,7 +50,7 @@
                                     @trgma.TryAgain
                                 </MudButton>
                             </LayoutView>
-                            #endif
+                            }
                         </ErrorContent>
                     </ErrorBoundary>
                 </Found>
@@ -91,25 +101,15 @@
         UI.OnChange -= StateHasChanged;
     }
 
-#if DEBUG
-    private RenderFragment RenderDevError() => builder =>
+    private static bool ShowDetailedErrors
     {
-        builder.OpenElement(0, "div");
-        builder.AddAttribute(1, "style", "padding:16px;border:1px solid #f00;background:#fff3f3;color:#700;font-family:sans-serif;direction:rtl");
-        builder.AddContent(2, (RenderFragment)((b2) =>
+        get
         {
-            b2.OpenElement(3, "div");
-            b2.AddAttribute(4, "style", "font-weight:bold;margin-bottom:8px");
-            b2.AddContent(5, "حدث خطأ غير متوقع أثناء عرض الصفحة.");
-            b2.CloseElement();
-
-            b2.OpenElement(6, "button");
-            b2.AddAttribute(7, "style", "margin-top:12px;padding:8px 12px;cursor:pointer;border:1px solid #700;background:#fff;color:#700;border-radius:6px");
-            b2.AddAttribute(8, "onclick", EventCallback.Factory.Create(this, () => Navigation.NavigateTo(Navigation.Uri, replace:true)));
-            b2.AddContent(9, "إعادة التحميل");
-            b2.CloseElement();
-        }));
-        builder.CloseElement();
-    };
+#if DEBUG
+            return true;
+#else
+            return false;
 #endif
+        }
+    }
 }
