@@ -1,3 +1,4 @@
+using AKSoftware.Localization.MultiLanguages;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using One.Shared.Configuration;
@@ -29,4 +30,12 @@ builder.Services.AddScoped(_ =>
     };
 });
 
-await builder.Build().RunAsync();
+var host = builder.Build();
+
+// Initialize the language container before the first component render. Generated
+// key accessors require a selected language and otherwise throw while rendering
+// the initial loading layout.
+var localizer = host.Services.GetRequiredService<ILanguageContainerService>();
+localizer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo("ar"));
+
+await host.RunAsync();

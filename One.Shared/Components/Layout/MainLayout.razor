@@ -7,7 +7,7 @@
 
 @if (_initializing)
 {
-    <OneLoader Visible="true" Text="@trgma.Loading" LoaderType="LoaderType.OneERP" />
+    <OneLoader Visible="true" Text="جاري التحميل..." LoaderType="LoaderType.OneERP" />
 }
 else
 {
@@ -95,9 +95,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        // Show loader while initializing
+        // Initialize localization before the first await. Awaiting authentication
+        // can trigger an intermediate render, and generated keys require a language.
         _initializing = true;
-        StateHasChanged();
+        _localizer.InitLocalizedComponent(this);
+        SetLanguage(LanguageState.Arabic);
 
         // Fix #8: Load claims from AuthenticationState instead of parsing JWT manually
         if (AuthState is not null)
@@ -105,9 +107,6 @@ else
             var state = await AuthState;
             _user = state.User;
         }
-
-        _localizer.InitLocalizedComponent(this);
-        await SetLanguage(LanguageState.Arabic);
 
         UI.SetRtl(IsArabic);
 
@@ -151,7 +150,7 @@ else
 
     bool IsArabic => _localizer.CurrentCulture?.TwoLetterISOLanguageName == "ar";
 
-    private async Task SetLanguage(LanguageState lang)
+    private void SetLanguage(LanguageState lang)
     {
         var culture = lang switch
         {
@@ -160,17 +159,17 @@ else
             _ => "en-US"
         };
 
-        await Task.Run(() => _localizer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(culture)));
+        _localizer.SetLanguage(System.Globalization.CultureInfo.GetCultureInfo(culture));
 
         // حدّث الـ RTL في UiState عشان ينعكس على الـ MudRTLProvider في App.razor
         UI.SetRtl(culture.StartsWith("ar"));
         StateHasChanged();
     }
 
-    private async Task ToggleLang()
+    private Task ToggleLang()
     {
-        if (IsArabic) await SetLanguage(LanguageState.English);
-        else await SetLanguage(LanguageState.Arabic);
+        SetLanguage(IsArabic ? LanguageState.English : LanguageState.Arabic);
+        return Task.CompletedTask;
     }
 
     private async Task Logout()
